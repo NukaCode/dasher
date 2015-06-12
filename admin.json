@@ -1,0 +1,91 @@
+{
+    "navigation": {
+        "Style": {
+            "name": "Style",
+            "icon": "fa fa-twitter",
+            "route": "admin.style.index",
+            "children": [
+                "admin.style.*"
+            ]
+        },
+        "Users": {
+            "name": "Users",
+            "icon": "fa fa-users",
+            "route": "home",
+            "children": [
+                "admin.user.user.*",
+                "admin.user.role.*",
+                "admin.user.action.*",
+                "admin.user.preference.*"
+            ],
+            "subSections": [
+                {
+                    "name": "Users",
+                    "route": "admin.user.user.index",
+                    "children": [
+                        "admin.user.user.*"
+                    ]
+                },
+                {
+                    "name": "Roles",
+                    "route": "admin.user.role.index",
+                    "children": [
+                        "admin.user.role.*"
+                    ]
+                },
+                {
+                    "name": "Actions",
+                    "route": "admin.user.action.index",
+                    "children": [
+                        "admin.user.action.*"
+                    ]
+                },
+                {
+                    "name": "Preferences",
+                    "route": "admin.user.preference.index",
+                    "children": [
+                        "admin.user.preference.*"
+                    ]
+                }
+            ]
+        }
+    },
+    "notifications": [
+        {
+            "color": "inverse",
+            "title": "Laravel",
+            "focus": {
+                "method": "App::version",
+                "argument": null
+            },
+            "icon": "fa-code",
+            "size": 3,
+            "bar": "bar"
+        },
+        {
+            "color": "info",
+            "title": "Theme",
+            "focus": {
+                "method": "Config::get",
+                "argument": "nukacode-frontend.theme"
+            },
+            "icon": "fa-css3",
+            "size": 3,
+            "bar": "bar-inverse"
+        },
+        {
+            "color": "purple",
+            "title": "Users",
+            "focus": {
+                "method": "User::count",
+                "argument": "*"
+            },
+            "icon": "fa-users",
+            "size": 3,
+            "bar": "bar-inverse"
+        }
+    ],
+    "widgets": {
+        "Users": "admin.users.index"
+    }
+}
