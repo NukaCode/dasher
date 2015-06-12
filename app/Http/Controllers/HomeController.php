@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Envoy;
+
 class HomeController extends BaseController
 {
 
@@ -10,8 +12,8 @@ class HomeController extends BaseController
      *
      * @return Response
      */
-    public function index()
+    public function index(Envoy $envoy)
     {
-        // Have fun
+        pp($envoy->run('nuka-installer'));
     }
 }
