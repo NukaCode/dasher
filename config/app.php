@@ -169,6 +169,8 @@ return [
          */
         NukaCode\Admin\AdminServiceProvider::class,
 
+        Laracasts\Utilities\JavaScript\JavascriptServiceProvider::class,
+
     ],
 
     /*

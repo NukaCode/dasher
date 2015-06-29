@@ -1,5 +1,28 @@
 <?php
 
+if (! function_exists('cache')) {
+    /**
+     * Get / set the specified cache value.
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @param  int    $minutes
+     *
+     * @return mixed
+     */
+    function cache($key = null, $value = null, $minutes = null) {
+        if (is_null($key)) {
+            return app('cache');
+        }
+
+        if (! is_null($value) && ! is_null($minutes)) {
+            return app('cache')->put($key, $value, $minutes);
+        }
+
+        return app('cache')->get($key);
+    }
+}
+
 if (! function_exists('pp')) {
 	/**
 	 * Print Pre data.
@@ -54,29 +77,6 @@ if (! function_exists('classify')) {
 		$search = ['_', '-', '.', '/', ':'];
 
 		return str_replace(' ', '_', str_replace($search, ' ', $value));
-	}
-}
-
-if (! function_exists('variableObject')) {
-	/**
-	 * @todo - Tell me what the hell this does.
-	 *
-	 * @param $object
-	 * @param $tap
-	 *
-	 * @return mixed
-	 */
-	function variableObject($object, $tap) {
-		if (strpos($tap, '->')) {
-			$fields = explode('->', $tap);
-			foreach ($fields as $field) {
-				$object = $object->$field;
-			}
-		} else {
-			$object = $object->$tap;
-		}
-
-		return $object;
 	}
 }
 

@@ -27,6 +27,8 @@ elixir(function (mix) {
         .copy(bower_dir + 'metisMenu/dist/metisMenu.js', 'resources/assets/js/vendor/metisMenu.js')
         .copy(bower_dir + 'mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js', 'resources/assets/js/vendor/bootstrap-colorpicker.js')
         .copy(bower_dir + 'jasny-bootstrap/dist/js/jasny-bootstrap.min.js', 'resources/assets/js/vendor/jasny-bootstrap.js')
+        .copy(bower_dir + 'vue/dist/vue.js', 'resources/assets/js/vendor/vue.js')
+        .copy(bower_dir + 'vue-resource/dist/vue-resource.js', 'resources/assets/js/vendor/vue-resource.js')
         .scripts(
         [
             'vendor/jquery.js',
@@ -35,6 +37,8 @@ elixir(function (mix) {
             'vendor/messenger-theme-future.js',
             'vendor/bootbox.js',
             'vendor/select2.js',
+            'vendor/vue.js',
+            'vendor/vue-resource.js',
         ], 'public/js/all.js')
         .scripts(
         [

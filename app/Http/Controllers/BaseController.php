@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Laracasts\Utilities\JavaScript\JavaScriptFacade;
 use NukaCode\Core\Controllers\BaseController as CoreBaseController;
 
 abstract class BaseController extends CoreBaseController
 {
 
     use DispatchesJobs, ValidatesRequests;
+
+    protected $resetBlade = false;
 
     public function __construct()
     {
@@ -22,30 +25,16 @@ abstract class BaseController extends CoreBaseController
     {
         \Menu::add('leftMenu')
              ->quickLink('Home', 'home')
-             ->quickLink('Memberlist', 'memberlist')
+             ->quickLink('Groups', 'group.index')
              ->end();
+    }
 
-        if (\Auth::guest()) {
-            \Menu::add('rightMenu')
-                 ->quickLink('Login', 'login')
-                 ->quickLink('Register', 'register')
-                 ->end();
+    protected function setJavascriptData($key, $value = null)
+    {
+        if (is_array($key)) {
+            JavaScriptFacade::put($key);
         } else {
-            \Auth::user()->updateLastActive();
-            \Menu::add('rightMenu')
-                 ->addDropDown('Admin')
-                 ->quickLink('Dashboard', 'admin.index')
-                 ->end()
-                 ->addDropDown(\Auth::user()->username)
-                 ->addLink('Edit your profile')
-                 ->setUrl('user/profile/')
-                 ->end()
-                 ->addLink('Public Profile')
-                 ->setUrl('user/view/' . \Auth::user()->id)
-                 ->end()
-                 ->quickLink('Logout', 'logout')
-                 ->end()
-                 ->end();
+            JavaScriptFacade::put([$key => $value]);
         }
     }
 }

@@ -14,7 +14,10 @@
         "nukacode/front-end-bootstrap": "~1.0",
         "nukacode/users": "~1.0",
         "nukacode/admin": "~1.0",
-        "rap2hpoutre/laravel-log-viewer": "0.*"
+        "rap2hpoutre/laravel-log-viewer": "0.*",
+        "guzzlehttp/guzzle": "~6.0",
+        "laracasts/utilities": "~2.0",
+        "ramsey/uuid": "^3.0@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
