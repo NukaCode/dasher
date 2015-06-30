@@ -6,55 +6,38 @@ use App\Models\Site;
 use App\Services\Envoy;
 use Illuminate\Filesystem\Filesystem;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Yaml\Yaml;
 
-class Edit
+abstract class BaseEdit
 {
 
     /* @var Site */
-    private $site;
+    protected $site;
 
     /* @var Envoy */
-    private $envoy;
+    protected $envoy;
 
     /* @var Filesystem */
-    private $filesystem;
+    protected $filesystem;
 
     /* @var string */
-    private $nginxConfigDir;
+    protected $nginxConfigDir;
 
-    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem)
+    /* @var Yaml */
+    protected $yaml;
+
+    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem, Yaml $yaml)
     {
         $this->site           = $site;
         $this->envoy          = $envoy;
         $this->filesystem     = $filesystem;
         $this->nginxConfigDir = '/Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/sites/';
+        $this->yaml           = $yaml;
     }
 
     /**
-     * Save the site to the database, create a config and add that config to nginx.
+     * Updates the site data in the database.
      *
-     * @param $id
-     * @param $request
-     *
-     * @return bool
-     */
-    public function handle($id, $request)
-    {
-        // Make sure the port is free
-        if (! $this->verifyPort($id, $request)) {
-            return [false, 'Port is already taken by another site!'];
-        }
-
-        $site = $this->updateSite($id, $request);
-
-        $this->generateNginxConfig($site);
-
-        $this->envoy->run('nginx --cmd="reload"');
-
-        return [true, null];
-    }
-
-    /**
      * @param $id
      * @param $request
      *
@@ -76,7 +59,7 @@ class Edit
      *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    private function generateNginxConfig($site)
+    protected function generateNginxConfig($site)
     {
         // Get the config template
         $template = $this->filesystem->get(base_path('resources/templates/nginx.conf.template'));
@@ -109,7 +92,7 @@ class Edit
      *
      * @return bool
      */
-    private function verifyPort($id, $site)
+    protected function verifyPort($id, $site)
     {
         return $this->site->where('id', '!=', $id)->where('port', $site['port'])->count() == 0;
     }

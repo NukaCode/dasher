@@ -9,7 +9,7 @@ class Site extends BaseModel
 
     public $timestamps = false;
 
-    protected $fillable = ['group_id', 'name', 'path', 'port', 'uuid'];
+    protected $fillable = ['group_id', 'name', 'path', 'port', 'uuid', 'homesteadFlag'];
 
     public function group()
     {

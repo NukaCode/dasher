@@ -23,6 +23,32 @@ if (! function_exists('cache')) {
     }
 }
 
+if (! function_exists('setting')) {
+    /**
+     * Get the specified setting value.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    function setting($key) {
+        return \App\Models\Setting::getValue($key);
+    }
+}
+
+if (! function_exists('vagrantDirectory')) {
+    /**
+     * Change a given directory to it's vagrant counterpart.
+     *
+     * @param  string $path
+     *
+     * @return mixed
+     */
+    function vagrantDirectory($path) {
+        return str_replace(setting('userDir'), '/home/vagrant', $path);
+    }
+}
+
 if (! function_exists('pp')) {
 	/**
 	 * Print Pre data.

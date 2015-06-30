@@ -5,7 +5,7 @@
                 <input type="text" id="search" class="form-control" placeholder="Search..." v-model="search" />
             </div>
             <div class="col-md-2">
-                {!! HTML::linkRoute('site.create', 'Add New Site', [$group->id], ['class' => 'btn btn-primary btn-block']) !!}
+                {!! HTML::linkRoute('nginx.create', 'Add New Site', [$group->id], ['class' => 'btn btn-primary btn-block']) !!}
             </div>
         </div>
         <br />

@@ -5,40 +5,32 @@ namespace App\Services\Site;
 use App\Models\Site;
 use App\Services\Envoy;
 use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
-class Delete
+abstract class BaseDelete
 {
 
     /* @var Site */
-    private $site;
+    protected $site;
 
     /* @var Envoy */
-    private $envoy;
+    protected $envoy;
 
     /* @var Filesystem */
-    private $filesystem;
+    protected $filesystem;
 
     /* @var string */
-    private $nginxConfigDir;
+    protected $nginxConfigDir;
 
-    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem)
+    /* @var Yaml */
+    protected $yaml;
+
+    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem, Yaml $yaml)
     {
         $this->site           = $site;
         $this->envoy          = $envoy;
         $this->filesystem     = $filesystem;
         $this->nginxConfigDir = '/Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/sites/';
-    }
-
-    public function handle($id)
-    {
-        $site = $this->site->find($id);
-
-        $this->filesystem->delete($this->nginxConfigDir . $site->uuid);
-
-        $site->delete();
-
-        $this->envoy->run('nginx --cmd="reload"');
-
-        return true;
+        $this->yaml           = $yaml;
     }
 }

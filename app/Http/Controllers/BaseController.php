@@ -26,7 +26,12 @@ abstract class BaseController extends CoreBaseController
         \Menu::add('leftMenu')
              ->quickLink('Home', 'home')
              ->quickLink('Groups', 'group.index')
+             ->quickLink('Generate Site', 'site.generate')
              ->end();
+
+        \Menu::add('rightMenu')
+            ->quickLink('Settings', 'setting.index')
+            ->end();
     }
 
     protected function setJavascriptData($key, $value = null)

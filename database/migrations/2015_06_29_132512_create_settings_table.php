@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSitesTable extends Migration
+class CreateSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,10 @@ class CreateSitesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sites', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('group_id')->unsigned()->index();
             $table->string('name');
-            $table->string('path');
-            $table->string('uuid', 36);
-            $table->boolean('homesteadFlag')->default(0);
-            $table->smallInteger('port');
+            $table->string('value')->nullable();
         });
     }
 
@@ -30,6 +26,6 @@ class CreateSitesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sites');
+        Schema::drop('settings');
     }
 }

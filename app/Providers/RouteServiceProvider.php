@@ -42,9 +42,9 @@ class RouteServiceProvider extends ServiceProvider
         });
 
 		// NukaCode Routes
-		require base_path('vendor/nukacode/core/src/routes.php');
-		require base_path('vendor/nukacode/front-end-bootstrap/src/routes.php');
-		require base_path('vendor/nukacode/users/src/routes.php');
-		require base_path('vendor/nukacode/admin/src/routes.php');
+		//require base_path('vendor/nukacode/core/src/routes.php');
+		//require base_path('vendor/nukacode/front-end-bootstrap/src/routes.php');
+		//require base_path('vendor/nukacode/users/src/routes.php');
+		//require base_path('vendor/nukacode/admin/src/routes.php');
     }
 }

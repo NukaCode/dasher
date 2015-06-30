@@ -1,7 +1,7 @@
 <div class="row" id="vue">
     <div class="col-md-offset-2 col-md-8">
         <div class="panel panel-default">
-            <div class="panel-heading">Create a New Site</div>
+            <div class="panel-heading">Create a New Nginx Site</div>
             <div class="panel-body">
                 {!! Form::open() !!}
                     {!! Form::setSizes(2, 8, 2)->groupOpen() !!}

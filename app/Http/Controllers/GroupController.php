@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Services\Group\Create;
+use App\Services\Group\Delete;
 use App\Services\Group\Edit;
 use Illuminate\Http\Request;
 
@@ -117,13 +118,15 @@ class GroupController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int   $id
+     * @param Delete $deleteGroupService
      *
      * @return Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy($id, Delete $deleteGroupService)
     {
-        $this->group->delete($id);
+        $deleteGroupService->handle($id);
 
         return redirect(route('group.index'))->with('message', 'Group deleted!');
     }

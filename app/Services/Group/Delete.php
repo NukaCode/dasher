@@ -7,7 +7,7 @@ use App\Resources\Homestead;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 
-class Create
+class Delete
 {
 
     /* @var Group */
@@ -26,45 +26,45 @@ class Create
         $this->filesystem = $filesystem;
     }
 
-    public function handle($request)
+    public function handle($id)
     {
-        // Make sure ports don't overlap.
-        if (! $this->verifyPorts($request)) {
-            return [false, 'Starting port is used by another group!'];
-        }
-
-        // Create the group.
-        $group = $this->group->create($request);
+        $group = $this->group->find($id);
 
         if (settings('homesteadFlag') == 1) {
-            // Add the folder to the homestead dir
             $this->updateHomesteadConfig($group);
 
             $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homesteadLocation') . '"');
         }
 
-        return [true, null];
-    }
+        $group->delete();
 
-    private function verifyPorts($request)
-    {
-        return $this->group->where('starting_port', $request['starting_port'])->count() == 0;
+        return [true, null];
     }
 
     /**
      * Updates the homestead.yaml file to include the new folder.
      *
      * @param $group
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function updateHomesteadConfig($group)
     {
         $config = $this->yaml->parse($this->filesystem->get(setting('userDir') . '/.homestead/Homestead.yaml'));
 
-        // Add the group to the folder config
-        $config['folders'][] = [
-            'map' => $group->starting_path,
-            'to'  => vagrantDirectory($group->starting_path),
-        ];
+        // Check the folders to see if we need to change anything.
+        foreach ($config['folders'] as $key => $homesteadGroup) {
+            if ($homesteadGroup['map'] == $group->starting_path) {
+                unset($config['folders'][$key]);
+            }
+        }
+        foreach ($config['sites'] as $key => $homesteadSite) {
+            $originalPath = vagrantDirectory($group->starting_path);
+
+            if (strpos($homesteadSite['to'], $originalPath) !== false) {
+                unset($config['sites'][$key]);
+            }
+        }
 
         app(Homestead::class)->saveHomesteadConfig($config);
     }
