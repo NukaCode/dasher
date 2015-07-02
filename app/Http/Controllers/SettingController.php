@@ -7,16 +7,25 @@ use Illuminate\Http\Request;
 
 class SettingController extends BaseController
 {
+
+    /* @var Setting */
+    private $setting;
+
+    public function __construct(Setting $setting)
+    {
+        parent::__construct();
+
+        $this->setting = $setting;
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @param Setting $setting
-     *
      * @return Response
      */
-    public function index(Setting $setting)
+    public function index()
     {
-        $settings = $setting->all();
+        $settings = $this->setting->all();
 
         $this->setViewData(compact('settings'));
     }
@@ -44,7 +53,8 @@ class SettingController extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -55,18 +65,22 @@ class SettingController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return Response
      */
     public function edit($id)
     {
-        //
+        $setting = $this->setting->find($id);
+
+        $this->setViewData(compact('setting'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return Response
      */
     public function update($id)
@@ -77,7 +91,8 @@ class SettingController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
+     *
      * @return Response
      */
     public function destroy($id)

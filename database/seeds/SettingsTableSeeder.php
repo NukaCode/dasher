@@ -16,7 +16,7 @@ class SettingsTableSeeder extends Seeder
             ['name' => 'homesteadLocation', 'value' => null],
             ['name' => 'homesteadIp', 'value' => '192.168.10.10'],
             ['name' => 'nginxFlag', 'value' => 0],
-            ['name' => 'nginxLogLocation', 'value' => null],
+            ['name' => 'nginxConfigLocation', 'value' => null],
         ];
 
         // Uncomment the below to run the seeder

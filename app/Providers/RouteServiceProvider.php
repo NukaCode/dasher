@@ -41,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
             require app_path('Http/routes.php');
         });
 
+        require app_path('Http/menu.php');
+
 		// NukaCode Routes
 		//require base_path('vendor/nukacode/core/src/routes.php');
 		//require base_path('vendor/nukacode/front-end-bootstrap/src/routes.php');

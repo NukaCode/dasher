@@ -3,6 +3,7 @@
 namespace App\Resources;
 
 use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Yaml;
 
 class Homestead
 {
@@ -10,9 +11,18 @@ class Homestead
     /* @var Filesystem */
     protected $filesystem;
 
-    public function __construct(Filesystem $filesystem)
+    /* @var Yaml */
+    private $yaml;
+
+    public function __construct(Filesystem $filesystem, Yaml $yaml)
     {
         $this->filesystem = $filesystem;
+        $this->yaml       = $yaml;
+    }
+
+    public function getIp()
+    {
+        return $this->yaml->parse($this->filesystem->get(setting('userDir') .'/.homestead/Homestead.yaml'))['ip'];
     }
 
     /**

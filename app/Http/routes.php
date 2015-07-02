@@ -1,14 +1,15 @@
 <?php
 
 Route::get('/', [
-	'as'   => 'home',
-	'uses' => 'HomeController@index'
+    'as'   => 'home',
+    'uses' => 'HomeController@index'
 ]);
 
-Route::group(['prefix' => 'site'], function  () {
+Route::group(['prefix' => 'site'], function () {
     Route::get('generate', [
-        'as'   => 'site.generate',
-        'uses' => 'SiteController@generate'
+        'as'         => 'site.generate',
+        'uses'       => 'SiteController@generate',
+        'middleware' => 'active:generate'
     ]);
 
     Route::post('generate', [
@@ -17,8 +18,8 @@ Route::group(['prefix' => 'site'], function  () {
     ]);
 });
 
-Route::group(['namespace' => 'Site'], function () {;
-    Route::group(['prefix' => 'nginx'], function  () {
+Route::group(['namespace' => 'Site'], function () {
+    Route::group(['prefix' => 'nginx'], function () {
         Route::get('create/{id}', [
             'as'   => 'nginx.create',
             'uses' => 'NginxController@create'
@@ -44,7 +45,7 @@ Route::group(['namespace' => 'Site'], function () {;
         ]);
     });
 
-    Route::group(['prefix' => 'homestead'], function  () {
+    Route::group(['prefix' => 'homestead'], function () {
         Route::get('create/{id}', [
             'as'   => 'homestead.create',
             'uses' => 'HomesteadController@create'
@@ -71,10 +72,10 @@ Route::group(['namespace' => 'Site'], function () {;
     });
 });
 
-resourceRoute('GroupController', 'group');
-resourceRoute('SettingController', 'setting');
+resourceRoute('GroupController', 'group', 'active:groups');
+resourceRoute('SettingController', 'setting', 'active:settings');
 
-Route::group(['prefix' => 'directory'], function  () {
+Route::group(['prefix' => 'directory'], function () {
     Route::get('lookup', [
         'as'   => 'directory.lookup',
         'uses' => 'DirectoryController@lookup'

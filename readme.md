@@ -1,3 +1,9 @@
+# Pre-Install
+Service | Where to get it
+---- | ----
+xcode | https://itunes.apple.com/de/app/xcode/id497799835
+node.js | https://nodejs.org/dist/v0.12.5/node-v0.12.5.pkg
+
 # During Install
 
 ## Add settings

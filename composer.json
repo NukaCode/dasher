@@ -10,7 +10,7 @@
         "laravelcollective/html": "~5.0",
         "filp/whoops": "~1.0",
         "nukacode/core": "~2.0",
-        "nukacode/menu": "~0.2",
+        "nukacode/menu": "dev-1.0.0-alpha",
         "nukacode/front-end-bootstrap": "~1.0",
         "nukacode/users": "~1.0",
         "nukacode/admin": "~1.0",
