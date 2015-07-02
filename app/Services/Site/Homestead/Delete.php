@@ -18,7 +18,7 @@ class Delete extends BaseDelete
 
         $site->delete();
 
-        $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homesteadLocation') . '"');
+        $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
         app(Hosts::class)->removeHost($site->name);
 
         return [true, null];

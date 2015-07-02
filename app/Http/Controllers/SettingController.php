@@ -83,9 +83,13 @@ class SettingController extends BaseController
      *
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        //
+        $setting = $this->setting->find($id);
+        $setting->fill($request->all());
+        $setting->save();
+
+        return redirect(route('setting.index'))->with('message', 'Setting has been updated.');
     }
 
     /**

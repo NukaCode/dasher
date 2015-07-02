@@ -6,6 +6,7 @@
                 <thead>
                     <tr>
                         <th>Setting</th>
+                        <th style="width: 5%;" class="text-center">Enabled</th>
                         <th>Value</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -14,6 +15,7 @@
                     @foreach ($settings as $setting)
                         <tr>
                             <td>{{ $setting->name }}</td>
+                            <td class="text-center">{{ $setting->present()->enabled }}</td>
                             <td title="{{ $setting->value }}">{{ $setting->present()->value }}</td>
                             <td class="text-right">
                                 <div class="btn-group">

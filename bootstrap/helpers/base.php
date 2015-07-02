@@ -36,6 +36,19 @@ if (! function_exists('setting')) {
     }
 }
 
+if (! function_exists('settingEnabled')) {
+    /**
+     * Get the specified setting value.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    function settingEnabled($key) {
+        return \App\Models\Setting::getEnabled($key);
+    }
+}
+
 if (! function_exists('vagrantDirectory')) {
     /**
      * Change a given directory to it's vagrant counterpart.

@@ -46,7 +46,7 @@ class Generate
         $this->envoy->run('make-site --path="' . $group->starting_path . '" --name="' . $sitePath . '" --type=' . $installerType, true);
 
         // Add the new site based on what site types are enabled.
-        if (setting('nginxFlag') == 1) {
+        if (settingEnabled('nginx') == 1) {
             list($success, $messages) = $this->createNginxSite($request, $group, $sitePath);
 
             if (! $success) {
@@ -54,7 +54,7 @@ class Generate
             }
         }
 
-        if (setting('homesteadFlag') == 1) {
+        if (settingEnabled('homestead') == 1) {
             list($success, $messages) = $this->createHomesteadSite($request, $group, $sitePath);
 
             if (! $success) {

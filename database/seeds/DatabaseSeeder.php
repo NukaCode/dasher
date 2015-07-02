@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call('SettingsTableSeeder');
 
         Model::reguard();
-		$this->call('PreferencesTableSeeder');
-		$this->call('Preferences_usersTableSeeder');
-		$this->call('RoleUsersTableSeeder');
-		$this->call('RolesTableSeeder');
-		$this->call('UsersTableSeeder');
+		//$this->call('PreferencesTableSeeder');
+		//$this->call('Preferences_usersTableSeeder');
+		//$this->call('RoleUsersTableSeeder');
+		//$this->call('RolesTableSeeder');
+		//$this->call('UsersTableSeeder');
     }
 }

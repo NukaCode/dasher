@@ -33,7 +33,7 @@ class Delete
         if (settings('homesteadFlag') == 1) {
             $this->updateHomesteadConfig($group);
 
-            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homesteadLocation') . '"');
+            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
         }
 
         $group->delete();

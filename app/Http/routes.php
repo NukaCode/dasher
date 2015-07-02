@@ -6,6 +6,11 @@ Route::get('/', [
 ]);
 
 Route::group(['prefix' => 'site'], function () {
+    Route::get('editor/{editor}/{id}', [
+        'as'   => 'site.editor',
+        'uses' => 'SiteController@editor',
+    ]);
+
     Route::get('generate', [
         'as'         => 'site.generate',
         'uses'       => 'SiteController@generate',
@@ -29,6 +34,7 @@ Route::group(['namespace' => 'Site'], function () {
             'as'   => 'nginx.create',
             'uses' => 'NginxController@store'
         ]);
+
         Route::get('edit/{id}', [
             'as'   => 'nginx.edit',
             'uses' => 'NginxController@edit'

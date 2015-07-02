@@ -3,11 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Site;
 use App\Services\Site\Generate;
 use Illuminate\Http\Request;
 
 class SiteController extends BaseController
 {
+
+    public function editor(Site $site, $editor, $id)
+    {
+        // Make sure we know what to do
+        $editorLocation = setting($editor . 'Location');
+
+        if ($editorLocation == null) {
+            return redirect(route('home'))->withErrors('Please set the ' . ucfirst($editor) . ' location in <a href="' . route('setting.index') . '">settings</a>.');
+        }
+
+        $site    = $site->find($id);
+        $command = str_replace(' ', '\ ', $editorLocation) . ' ' . $site->rootPath;
+
+        exec($command . ' ' . $site->rootPath);
+
+        return redirect(route('home'));
+    }
 
     /**
      * Show the form to generate a new Laravel site.

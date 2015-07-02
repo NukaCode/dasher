@@ -2,6 +2,7 @@
 
 # Install it
 curl -sS https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
 
 # Snag the nuka installer
 composer global require "nukacode/installer"

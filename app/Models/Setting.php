@@ -11,7 +11,7 @@ class Setting extends BaseModel
 
     public $timestamps = false;
 
-    protected $fillable = ['name', 'value'];
+    protected $fillable = ['name', 'enabled', 'value'];
 
     protected $presenter = SettingPresenter::class;
 
@@ -19,6 +19,15 @@ class Setting extends BaseModel
     {
         try {
             return static::where('name', $name)->first()->value;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public static function getEnabled($name)
+    {
+        try {
+            return static::where('name', $name)->first()->enabled;
         } catch (\Exception $e) {
             return null;
         }

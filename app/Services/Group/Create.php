@@ -40,7 +40,7 @@ class Create
             // Add the folder to the homestead dir
             $this->updateHomesteadConfig($group);
 
-            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homesteadLocation') . '"');
+            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
         }
 
         return [true, null];

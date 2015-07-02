@@ -40,7 +40,7 @@ class Edit
         if (settings('homesteadFlag') == 1) {
             $this->updateHomesteadConfig($originalGroup, $newGroup);
 
-            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homesteadLocation') . '"');
+            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
         }
 
         return [true, null];
