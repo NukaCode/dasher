@@ -7,6 +7,8 @@ brew tap homebrew/php
 # Install php with the needed bits
 brew install --without-apache --with-fpm --with-mysql php56
 
+brew install php56-mcrypt
+
 # Update the path variable
 if [ -f ~/.bash_profile ]; then
     echo 'export PATH="/usr/local/sbin:$PATH"' >> ~/.bash_profile
