@@ -13,7 +13,6 @@ mkdir -p /usr/local/etc/nginx/sites-available
 mkdir -p /usr/local/etc/nginx/sites-enabled
 mkdir -p /usr/local/etc/nginx/conf.d
 mkdir -p /usr/local/etc/nginx/ssl
-sudo mkdir -p /var/www
 
 sudo chown :staff ~/Code
 sudo chmod 775 ~/Code
@@ -26,7 +25,12 @@ curl -L https://gist.github.com/frdmn/7853158/raw/nginx.conf -o /usr/local/etc/n
 curl -L https://gist.github.com/frdmn/7853158/raw/php-fpm -o /usr/local/etc/nginx/conf.d/php-fpm
 
 # Create a default virtual host
-curl -L https://gist.github.com/frdmn/7853158/raw/sites-available_default -o /usr/local/etc/nginx/sites-available/default
+# Set up the nginx config
+location=`pwd | sed 's/\\//\\\\\//g'`
+sed -e s/{{PATH}}/"$location"/g resources/scripts/install/default.template > resources/scripts/install/default
+
+# Move it to the proper location
+mv resources/scripts/install/default -o /usr/local/etc/nginx/sites-available/default
 
 git clone http://git.frd.mn/frdmn/nginx-virtual-host.git ~/Code
 rm -rf ~/Code.git

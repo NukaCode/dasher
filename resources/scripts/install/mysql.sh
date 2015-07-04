@@ -1,10 +1,32 @@
 #! /bin/bash
 
 # Install it
-brew install mysql
+#brew install mysql
 
 # Setup auto start
-ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+#ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
 
 # Start it
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+#launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
+# Create the database, the user and set up the .env file
+MYSQL=`which mysql`
+
+read -p "What is the name of the database you would like to use for the dashboard?  " DB_NAME
+read -p "What is the name of the user that can access the database?                 " DB_USER
+read -p "What is the password for this user?                                        " DB_PASS
+
+Q1="CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+Q2="GRANT USAGE ON *.* TO $DB_USER@localhost IDENTIFIED BY '$DB_PASS';"
+Q3="GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER@localhost;"
+Q4="FLUSH PRIVILEGES;"
+SQL="${Q1}${Q2}${Q3}${Q4}"
+
+#$MYSQL -uroot -p -e "$SQL"
+
+cp .env.example .env.install
+sed -i.bak s/{{DB_NAME}}/"$DB_NAME"/g .env.install
+sed -i.bak s/{{DB_USER}}/"$DB_USER"/g .env.install
+sed -i.bak s/{{DB_PASS}}/"$DB_PASS"/g .env.install
+
+rm -f .env.install.bak
