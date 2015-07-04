@@ -11,7 +11,7 @@
         "filp/whoops": "~1.0",
         "nukacode/core": "~2.1",
         "nukacode/menu": "dev-1.0.0-alpha",
-        "nukacode/front-end-bootstrap": "~1.0",
+        "nukacode/front-end-bootstrap": "5.1.x-dev",
         "nukacode/users": "~1.0",
         "nukacode/admin": "~1.0",
         "rap2hpoutre/laravel-log-viewer": "0.*",

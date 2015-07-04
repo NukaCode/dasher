@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3a5524b3777dfabfe5e45c02083780bd",
+    "hash": "354253da98c6a7c65b8d28336e854042",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1079,16 +1079,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.1.5",
+            "version": "v5.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "25d872ec1945b30083f3e348039c380307b42d5e"
+                "reference": "356418f315e4f6bf55d2f4bd451606e45a7595df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/25d872ec1945b30083f3e348039c380307b42d5e",
-                "reference": "25d872ec1945b30083f3e348039c380307b42d5e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/356418f315e4f6bf55d2f4bd451606e45a7595df",
+                "reference": "356418f315e4f6bf55d2f4bd451606e45a7595df",
                 "shasum": ""
             },
             "require": {
@@ -1203,7 +1203,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-07-02 02:28:22"
+            "time": "2015-07-03 13:48:44"
         },
         {
             "name": "laravelcollective/html",
@@ -1553,22 +1553,21 @@
         },
         {
             "name": "nukacode/admin",
-            "version": "1.0.3",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NukaCode/admin.git",
-                "reference": "a78b9d7a200965f1eb49c85db9653f8b776eb2a0"
+                "reference": "6284de4c2ede536a26ae29808eef22c73dc8a986"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NukaCode/admin/zipball/a78b9d7a200965f1eb49c85db9653f8b776eb2a0",
-                "reference": "a78b9d7a200965f1eb49c85db9653f8b776eb2a0",
+                "url": "https://api.github.com/repos/NukaCode/admin/zipball/6284de4c2ede536a26ae29808eef22c73dc8a986",
+                "reference": "6284de4c2ede536a26ae29808eef22c73dc8a986",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "~5.0",
-                "nukacode/core": "~2.0",
-                "nukacode/front-end-bootstrap": "~1.0"
+                "nukacode/core": "~2.0"
             },
             "require-dev": {
                 "behat/behat": "~3.0@dev",
@@ -1604,7 +1603,7 @@
                 }
             ],
             "description": "An extendable admin area.",
-            "time": "2015-06-10 13:39:49"
+            "time": "2015-02-23 16:43:10"
         },
         {
             "name": "nukacode/core",
@@ -1661,16 +1660,16 @@
         },
         {
             "name": "nukacode/front-end-bootstrap",
-            "version": "1.0.6",
+            "version": "5.1.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NukaCode/Front-End-Bootstrap.git",
-                "reference": "a8a8936c10bb1eb2c1f88cd7821a568ccae92e6c"
+                "reference": "3b4be25c2cf118fc8f39f7cbaf47e4f86404a1ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NukaCode/Front-End-Bootstrap/zipball/a8a8936c10bb1eb2c1f88cd7821a568ccae92e6c",
-                "reference": "a8a8936c10bb1eb2c1f88cd7821a568ccae92e6c",
+                "url": "https://api.github.com/repos/NukaCode/Front-End-Bootstrap/zipball/3b4be25c2cf118fc8f39f7cbaf47e4f86404a1ac",
+                "reference": "3b4be25c2cf118fc8f39f7cbaf47e4f86404a1ac",
                 "shasum": ""
             },
             "require": {
@@ -1706,7 +1705,7 @@
                 }
             ],
             "description": "Helpers and views for a basic bootstrap setup.",
-            "time": "2015-05-02 20:43:06"
+            "time": "2015-07-04 17:51:05"
         },
         {
             "name": "nukacode/html",
@@ -3671,16 +3670,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.3.4",
+            "version": "2.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "92408bb1968a81b3217a6fdf6c1a198da83caa35"
+                "reference": "1c330b1b6e1ea8fd15f2fbea46770576e366855c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/92408bb1968a81b3217a6fdf6c1a198da83caa35",
-                "reference": "92408bb1968a81b3217a6fdf6c1a198da83caa35",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/1c330b1b6e1ea8fd15f2fbea46770576e366855c",
+                "reference": "1c330b1b6e1ea8fd15f2fbea46770576e366855c",
                 "shasum": ""
             },
             "require": {
@@ -3722,7 +3721,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-06-11 15:55:48"
+            "time": "2015-07-04 05:41:32"
         },
         {
             "name": "sebastian/comparator",
@@ -4149,6 +4148,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "nukacode/menu": 20,
+        "nukacode/front-end-bootstrap": 20,
         "ramsey/uuid": 20
     },
     "prefer-stable": true,

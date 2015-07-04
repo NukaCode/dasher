@@ -1,6 +1,8 @@
 #! /bin/bash
 
 # Create the database, the user and set up the .env file
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+
 MYSQL=`which mysql`
 
 read -p "What is the name of the database you would like to use for the dashboard?  " DB_NAME
@@ -13,6 +15,7 @@ Q3="GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER@localhost;"
 Q4="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}${Q3}${Q4}"
 
+echo -e "${Yellow}Mysql is going to ask you for the root password.  By default, it is blank."
 $MYSQL -uroot -p -e "$SQL"
 
 cp .env.example .env
