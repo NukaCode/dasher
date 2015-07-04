@@ -11,7 +11,7 @@ class Delete extends BaseDelete
     {
         $site = $this->site->find($id);
 
-        $this->filesystem->delete($this->nginxConfigDir . $site->uuid);
+        $this->filesystem->delete(setting('nginx') . '/sites-enabled/' . $site->uuid);
 
         $site->delete();
 

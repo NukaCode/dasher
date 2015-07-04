@@ -5,8 +5,8 @@ server {
 	# framework-version 5
 
 	listen *:{{PORT}};
-	access_log '/Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/logs/{{PORT}}-access.log';
-	error_log '/Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/logs/{{PORT}}-error.log';
+	access_log '{{LOGS}}/{{PORT}}-access.log';
+	error_log '{{LOGS}}/{{PORT}}-error.log';
 
 	root '{{PATH}}';
 	index index.html index.htm local index.php;

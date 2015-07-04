@@ -1,8 +1,9 @@
 <?php
 
 Route::get('/', [
-    'as'   => 'home',
-    'uses' => 'HomeController@index'
+    'as'         => 'home',
+    'uses'       => 'HomeController@index',
+    'middleware' => 'active:home'
 ]);
 
 Route::group(['prefix' => 'site'], function () {

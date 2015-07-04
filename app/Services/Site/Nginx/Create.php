@@ -59,12 +59,14 @@ class Create extends BaseCreate
         $template = $this->filesystem->get(base_path('resources/templates/nginx.conf.template'));
 
         // Replace the needed data
-        $config = str_replace(['{{NAME}}', '{{PORT}}', '{{PATH}}'], [$site->name, $site->port, $site->path], $template);
+        $config = str_replace(
+            ['{{NAME}}', '{{LOGS}}', '{{PORT}}', '{{PATH}}'],
+            [$site->name, setting('nginx') .'/logs', $site->port, $site->path],
+            $template);
 
         // Save the config to the filesystem.
-        $filename = $this->nginxConfigDir . $site->uuid;
+        $filename = setting('nginx') . '/sites-enabled/' . $site->uuid;
 
         $this->filesystem->put($filename, $config);
-        exec('xattr -w com.apple.TextEncoding \'utf-8;134217984\' ' . $filename);
     }
 }

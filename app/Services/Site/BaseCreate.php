@@ -20,9 +20,6 @@ abstract class BaseCreate
     /* @var Filesystem */
     protected $filesystem;
 
-    /* @var string */
-    protected $nginxConfigDir;
-
     /* @var Yaml */
     protected $yaml;
 
@@ -31,7 +28,6 @@ abstract class BaseCreate
         $this->site           = $site;
         $this->envoy          = $envoy;
         $this->filesystem     = $filesystem;
-        $this->nginxConfigDir = '/Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/sites/';
         $this->yaml           = $yaml;
     }
 

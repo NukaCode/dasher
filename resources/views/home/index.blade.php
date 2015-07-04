@@ -76,8 +76,10 @@
             @if (settingEnabled('atom') == 1)
                 <a href="/site/editor/atom/@{{ site.id }}" class="btn btn-xs btn-info"><small>Atom</small></a>
             @endif
-            <a href="/homestead/edit/@{{ site.id }}" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
-            <a href="/homestead/delete/@{{ site.id }}" class="confirm-remove btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+            <a v-show="site.homesteadFlag == 1" href="/homestead/edit/@{{ site.id }}" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
+            <a v-show="site.homesteadFlag == 1" href="/homestead/delete/@{{ site.id }}" class="confirm-remove btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+            <a v-show="site.homesteadFlag == 0" href="/nginx/edit/@{{ site.id }}" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i></a>
+            <a v-show="site.homesteadFlag == 0" href="/nginx/delete/@{{ site.id }}" class="confirm-remove btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
         </span>
     </script>
     <script>
