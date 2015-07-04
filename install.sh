@@ -149,8 +149,9 @@ fi
 ############ Finishing the Site
 ####################################################################################################################
 echo -e "${Yellow}Setting up the site... $Color_Off"
-#php artisan key:generate
-#sudo npm install
-#bower install
+php artisan key:generate
+sudo npm install
+bower install
+php artisan migrate --seed
 
 echo 'Finished with initial install!'
