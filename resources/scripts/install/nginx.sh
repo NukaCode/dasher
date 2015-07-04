@@ -30,7 +30,7 @@ location=`pwd | sed 's/\\//\\\\\//g'`
 sed -e s/{{PATH}}/"$location"/g resources/scripts/install/default.template > resources/scripts/install/default
 
 # Move it to the proper location
-mv resources/scripts/install/default -o /usr/local/etc/nginx/sites-available/default
+mv resources/scripts/install/default /usr/local/etc/nginx/sites-available/default
 
 git clone http://git.frd.mn/frdmn/nginx-virtual-host.git ~/Code
 rm -rf ~/Code.git

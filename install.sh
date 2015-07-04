@@ -12,10 +12,10 @@ echo 'Starting the installer...'
 ############ Xcode
 ####################################################################################################################
 #echo -e "${Green}Installing xcode (click install)...'
-#. resources/scripts/install/xcode.sh
+. resources/scripts/install/xcode.sh
 
-#echo 'Open Xcode, hit ⌘ + , to access the Preferences and navigate to the Locations tab. Set the Command Line Tools to the latest version available...'
-#read -p "Press [Enter] when done ..."
+echo 'Open Xcode, hit ⌘ + , to access the Preferences and navigate to the Locations tab. Set the Command Line Tools to the latest version available...'
+read -p "Press [Enter] when done ..."
 
 ####################################################################################################################
 ############ Homebrew
@@ -67,19 +67,13 @@ else
     echo -e "${Cyan}Mysql already installed... $Color_Off"
 fi
 
+. resources/scripts/update/mysql.sh
+
 ####################################################################################################################
 ############ PHP
 ####################################################################################################################
-variable=`php -v`
-rc=$?
-
-if [[ $rc != 0 ]]
-then
-    echo -e "${Green}Installing PHP... $Color_Off"
-    . resources/scripts/install/php.sh
-else
-    echo -e "${Cyan}PHP already installed... $Color_Off"
-fi
+echo -e "${Green}Installing PHP... $Color_Off"
+. resources/scripts/install/php.sh
 
 ####################################################################################################################
 ############ Nginx
@@ -148,10 +142,14 @@ fi
 ####################################################################################################################
 ############ Finishing the Site
 ####################################################################################################################
-echo -e "${Yellow}Setting up the site... $Color_Off"
+echo -e "${Yellow}Generating a key... $Color_Off"
 php artisan key:generate
+echo -e "${Yellow}Gathering needed compoenents... $Color_Off"
 sudo npm install
 bower install
+echo -e "${Yellow}Running migrations... $Color_Off"
 php artisan migrate --seed
+echo -e "${Yellow}Downloading composer packages... $Color_Off"
+composer install
 
 echo 'Finished with initial install!'
