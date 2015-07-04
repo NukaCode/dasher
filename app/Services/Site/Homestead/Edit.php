@@ -23,34 +23,11 @@ class Edit extends BaseEdit
         $originalSite = $this->site->find($id);
         $newSite      = $this->updateSite($id, $request);
 
-        $this->updateHomesteadConfig($originalSite, $newSite);
+        app(Homestead::class)->updateConfig($originalSite, $newSite);
 
         $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
         app(Hosts::class)->updateHost($originalSite->name, $newSite->name);
 
         return [true, null];
-    }
-
-    /**
-     * Updates the homestead.yaml file to include the new site.
-     *
-     * @param $originalSite
-     * @param $newSite
-     */
-    protected function updateHomesteadConfig($originalSite, $newSite)
-    {
-        $config = $this->yaml->parse($this->filesystem->get(setting('userDir') . '/.homestead/Homestead.yaml'));
-
-        // Check the sites and databases to see if we need to change anything.
-        foreach ($config['sites'] as $key => $homesteadSite) {
-            if ($homesteadSite['map'] == $originalSite->name) {
-                $config['sites'][$key] = [
-                    'map' => $newSite->name,
-                    'to'  => vagrantDirectory($newSite->path)
-                ];
-            }
-        }
-
-        app(Homestead::class)->saveHomesteadConfig($config);
     }
 }

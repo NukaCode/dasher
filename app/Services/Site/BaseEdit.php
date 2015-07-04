@@ -17,22 +17,10 @@ abstract class BaseEdit
     /* @var Envoy */
     protected $envoy;
 
-    /* @var Filesystem */
-    protected $filesystem;
-
-    /* @var string */
-    protected $nginxConfigDir;
-
-    /* @var Yaml */
-    protected $yaml;
-
-    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem, Yaml $yaml)
+    public function __construct(Site $site, Envoy $envoy)
     {
-        $this->site           = $site;
-        $this->envoy          = $envoy;
-        $this->filesystem     = $filesystem;
-        $this->nginxConfigDir = '/Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/sites/';
-        $this->yaml           = $yaml;
+        $this->site  = $site;
+        $this->envoy = $envoy;
     }
 
     /**
@@ -50,38 +38,6 @@ abstract class BaseEdit
         $site->save();
 
         return $site;
-    }
-
-    /**
-     * Generate the nginx config based on the saved template and the site data.
-     *
-     * @param $site
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    protected function generateNginxConfig($site)
-    {
-        // Get the config template
-        $template = $this->filesystem->get(base_path('resources/templates/nginx.conf.template'));
-
-        // Replace the needed data
-        $config = str_replace(['{{NAME}}', '{{PORT}}', '{{PATH}}'], [$site->name, $site->port, $site->path], $template);
-
-        // Save the config to the filesystem.
-        $filename = $this->nginxConfigDir . $site->uuid;
-        $this->saveConfig($filename, $config);
-    }
-
-    /**
-     * Save the config to the filesystem and add the extended attributes.
-     *
-     * @param $filename
-     * @param $config
-     */
-    protected function saveConfig($filename, $config)
-    {
-        $this->filesystem->put($filename, $config);
-        exec('xattr -w com.apple.TextEncoding \'utf-8;134217984\' ' . $filename);
     }
 
     /**

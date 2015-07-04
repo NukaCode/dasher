@@ -2,6 +2,7 @@
 
 namespace App\Services\Site\Nginx;
 
+use App\Resources\Nginx;
 use App\Services\Site\BaseCreate;
 
 class Create extends BaseCreate
@@ -21,7 +22,7 @@ class Create extends BaseCreate
 
         $site = $this->createSite($site, $groupId, $uuid);
 
-        $this->generateNginxConfig($site);
+        Nginx::createConfig($site);
 
         $this->envoy->run('nginx --cmd="reload"');
 
@@ -44,29 +45,5 @@ class Create extends BaseCreate
         $port = $site['port'];
 
         return compact('path', 'name', 'port', 'uuid', 'group_id');
-    }
-
-    /**
-     * Generate the nginx config based on the saved template and the site data.
-     *
-     * @param $site
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    protected function generateNginxConfig($site)
-    {
-        // Get the config template
-        $template = $this->filesystem->get(base_path('resources/templates/nginx.conf.template'));
-
-        // Replace the needed data
-        $config = str_replace(
-            ['{{NAME}}', '{{LOGS}}', '{{PORT}}', '{{PATH}}'],
-            [$site->name, setting('nginx') .'/logs', $site->port, $site->path],
-            $template);
-
-        // Save the config to the filesystem.
-        $filename = setting('nginx') . '/sites-enabled/' . $site->uuid;
-
-        $this->filesystem->put($filename, $config);
     }
 }

@@ -20,15 +20,11 @@ abstract class BaseCreate
     /* @var Filesystem */
     protected $filesystem;
 
-    /* @var Yaml */
-    protected $yaml;
-
-    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem, Yaml $yaml)
+    public function __construct(Site $site, Envoy $envoy, Filesystem $filesystem)
     {
         $this->site           = $site;
         $this->envoy          = $envoy;
         $this->filesystem     = $filesystem;
-        $this->yaml           = $yaml;
     }
 
     /**

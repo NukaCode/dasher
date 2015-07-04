@@ -27,7 +27,7 @@ class Create extends BaseCreate
 
         $site = $this->createSite($site, $groupId, $uuid);
 
-        $this->generateHomesteadConfig($site, $name);
+        app(Homestead::class)->createConfig($site, $name);
         $this->addEnvConfig($name, $site);
 
         $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
@@ -57,29 +57,5 @@ class Create extends BaseCreate
         }
 
         return compact('path', 'name', 'port', 'uuid', 'group_id', 'homesteadFlag');
-    }
-
-    /**
-     * Updates the homestead.yaml file to include the new site.
-     *
-     * @param $site
-     * @param $name
-     *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     */
-    protected function generateHomesteadConfig($site, $name)
-    {
-        $config = $this->yaml->parse($this->filesystem->get(setting('userDir') . '/.homestead/Homestead.yaml'));
-
-        // Add the site to the config
-        $config['sites'][] = [
-            'map' => $site->name,
-            'to'  => vagrantDirectory($site->path),
-        ];
-
-        // Add the database to the config
-        $config['databases'][] = Str::snake($name);
-
-        app(Homestead::class)->saveHomesteadConfig($config);
     }
 }

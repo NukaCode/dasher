@@ -22,7 +22,97 @@ class Homestead
 
     public function getIp()
     {
-        return $this->yaml->parse($this->filesystem->get(setting('userDir') .'/.homestead/Homestead.yaml'))['ip'];
+        return $this->yaml->parse($this->filesystem->get(setting('userDir') . '/.homestead/Homestead.yaml'))['ip'];
+    }
+
+    /**
+     * Add a site to the config.
+     *
+     * @param $site
+     * @param $name
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function createConfig($site, $name)
+    {
+        $config = $this->getConfig();
+
+        // Add the site to the config
+        $config['sites'][] = [
+            'map' => $site->name,
+            'to'  => vagrantDirectory($site->path),
+        ];
+
+        // Add the database to the config
+        $config['databases'][] = Str::snake($name);
+
+        $this->saveConfig($config);
+    }
+
+    /**
+     * Update a site in the config.
+     *
+     * @param $originalSite
+     * @param $newSite
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function updateConfig($originalSite, $newSite)
+    {
+        $config = $this->getConfig();
+
+        // Check the sites and databases to see if we need to change anything.
+        foreach ($config['sites'] as $key => $homesteadSite) {
+            if ($homesteadSite['map'] == $originalSite->name) {
+                $config['sites'][$key] = [
+                    'map' => $newSite->name,
+                    'to'  => vagrantDirectory($newSite->path)
+                ];
+            }
+        }
+
+        $this->saveConfig($config);
+    }
+
+    /**
+     * Remove a site from the config.
+     *
+     * @param $site
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    public function deleteConfig($site)
+    {
+        // Convert yaml to array
+        $config = $this->getConfig();
+
+        // Look for the site in sites and in databases
+        foreach ($config['sites'] as $key => $homesteadSite) {
+            if ($homesteadSite['map'] == $site->name) {
+                unset($config['sites'][$key]);
+            }
+        }
+
+        foreach ($config['databases'] as $key => $homesteadDatabase) {
+            if ($homesteadDatabase == Str::snake(str_replace('.app', '', $site->name))) {
+                unset($config['databases'][$key]);
+            }
+        }
+
+        // Rebuild the yaml
+        $this->saveConfig($config);
+    }
+
+    /**
+     * Get and parse the main yaml config.
+     *
+     * @return array
+     *
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    private function getConfig()
+    {
+        return $this->yaml->parse($this->filesystem->get(setting('userDir') . '/.homestead/Homestead.yaml'));
     }
 
     /**
@@ -30,7 +120,7 @@ class Homestead
      *
      * @param $config
      */
-    public function saveHomesteadConfig($config)
+    private function saveConfig($config)
     {
         $finalConfig = '';
 

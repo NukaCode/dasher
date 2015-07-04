@@ -29,7 +29,7 @@ class SettingsTableSeeder extends Seeder
             [
                 'name' => 'nginx',
                 'enabled' => 0,
-                'value' => 0
+                'value' => trim(str_replace('/default', '', shell_exec('locate "sites-enabled/default"')))
             ],
             [
                 'name' => 'phpstorm',

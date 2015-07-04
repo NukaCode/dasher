@@ -2,24 +2,26 @@
 
 namespace App\Resources;
 
-use App\Services\Status;
-use App\Services\Verify;
+use App\Models\Site;
 
 class Nginx
 {
 
-    public $version;
-
-    public $status;
-
-    public function __construct(Status $status, Verify $verify)
+    public static function createConfig(Site $site)
     {
-        $this->version = cache()->remember('nginx.version', 120, function () use ($verify) {
-            return $verify->nginx();
-        });
-        $this->status = cache()->remember('nginx.status', 5, function () use ($status) {
-            return $status->nginx();
-        });
+        // Get the config template
+        $template = app('files')->get(base_path('resources/templates/site.template'));
+
+        // Replace the needed data
+        $config = str_replace(
+            ['{{NAME}}', '{{LOGS}}', '{{PORT}}', '{{PATH}}'],
+            [$site->name, setting('nginx') .'/logs', $site->port, $site->path],
+            $template);
+
+        // Save the config to the filesystem.
+        $filename = setting('nginx') . '/sites-enabled/' . $site->uuid;
+
+        app('files')->put($filename, $config);
     }
 
 }

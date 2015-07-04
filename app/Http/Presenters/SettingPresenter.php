@@ -47,6 +47,11 @@ class SettingPresenter extends BasePresenter {
         return shell_exec('cd ~; pwd');
     }
 
+    public function nginxEstimate()
+    {
+        return shell_exec('locate "sites-enabled/default"');
+    }
+
     public function homesteadEstimate()
     {
         return str_replace('/Vagrantfile', '', shell_exec('locate "Homestead/Vagrantfile";'));

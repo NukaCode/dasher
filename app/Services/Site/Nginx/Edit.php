@@ -2,10 +2,7 @@
 
 namespace App\Services\Site\Nginx;
 
-use App\Models\Site;
-use App\Services\Envoy;
-use Illuminate\Filesystem\Filesystem;
-use Ramsey\Uuid\Uuid;
+use App\Resources\Nginx;
 
 class Edit extends BaseEdit
 {
@@ -27,7 +24,7 @@ class Edit extends BaseEdit
 
         $site = $this->updateSite($id, $request);
 
-        $this->generateNginxConfig($site);
+        Nginx::createConfig($site);
 
         $this->envoy->run('nginx --cmd="reload"');
 
