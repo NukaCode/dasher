@@ -13,7 +13,7 @@ Q3="GRANT ALL PRIVILEGES ON $DB_NAME.* TO $DB_USER@localhost;"
 Q4="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}${Q3}${Q4}"
 
-#$MYSQL -uroot -p -e "$SQL"
+$MYSQL -uroot -p -e "$SQL"
 
 cp .env.example .env
 sed -i.bak s/{{DB_NAME}}/"$DB_NAME"/g .env
