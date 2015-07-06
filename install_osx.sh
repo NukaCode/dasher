@@ -64,6 +64,17 @@ else
     echo -e "${Cyan}Laravel installer already installed... $Color_Off"
 fi
 
+variable=`envoy --version 2> /dev/null`
+rc=$?
+
+if [[ $rc != 0 ]]
+then
+    echo -e "${Green}Installing Laravel Envoy... $Color_Off"
+    . resources/scripts/osx/install/laravel_envoy.sh
+else
+    echo -e "${Cyan}Laravel envoy already installed... $Color_Off"
+fi
+
 echo -e "${Green}Updating locate database... $Color_Off"
 sudo /usr/libexec/locate.updatedb
 
@@ -167,5 +178,14 @@ echo -e "${Yellow}Running migrations... $Color_Off"
 php artisan migrate --seed
 composer dump-autoload -o
 php artisan optimize
+
+####################################################################################################################
+############ Grant the site visudo permission to nginx
+####################################################################################################################
+echo "Please add the following line at the end of the file that is about to pop up  [Press enter when ready]..."
+user=`whoami`
+nginx=`which nginx`
+read -p "$user   ALL=(ALL) NOPASSWD: $nginx"
+sudo visudo
 
 echo 'Finished with initial install!'

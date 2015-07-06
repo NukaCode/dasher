@@ -15,11 +15,13 @@ class CreateSitesTable extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('group_id')->unsigned()->index();
-            $table->string('name');
-            $table->string('path');
-            $table->string('uuid', 36);
-            $table->boolean('homesteadFlag')->default(0);
+            $table->string('name', 255);
+            $table->string('path', 255);
             $table->smallInteger('port');
+            $table->string('uuid', 36);
+            $table->string('status', 255);
+            $table->boolean('homesteadFlag')->default(0);
+            $table->boolean('readyFlag')->default(0);
         });
     }
 

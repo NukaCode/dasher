@@ -22,3 +22,14 @@ $USER  ALL=(ALL) NOPASSWD: $NGINX_LOCATION
 Service | How to get it
 ---- | ----
 git | sudo apt-get install git
+
+# To-Do
+
+- Move site adding to the job system
+    - Possibly only for homestead
+- Move site generation to the job system
+- Installer
+    - Should ask for homestead or nginx/php/mysql
+    - Should add a basic group (Default)
+    - Should point to the directory local-dash was installed to
+    - Should add localdashboard to the default group
