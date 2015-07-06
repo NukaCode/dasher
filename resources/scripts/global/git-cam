@@ -1,0 +1,27 @@
+## Add this as the contents of ~/bin/git-cam
+
+#!/bin/sh
+
+usage() { echo "Usage: $0 [-b (Optional: adds branch to message)]" 1>&2; exit 1; }
+
+while getopts ":b:a" opt; do
+    case $opt in
+        b)
+            ADDBRANCH=1
+            shift 1
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+
+BRANCH=`git rev-parse --symbolic-full-name --abbrev-ref HEAD`
+
+if [[ "$ADDBRANCH" == 1 ]]; then
+    MSG="$BRANCH: $@"
+else
+    MSG="$@"
+fi
+
+exec git commit -a -m "$MSG"

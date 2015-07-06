@@ -1,28 +1,24 @@
-# Pre-Install
-Service | Where to get it
----- | ----
-xcode | https://itunes.apple.com/de/app/xcode/id497799835
-node.js | https://nodejs.org/dist/v0.12.5/node-v0.12.5.pkg
+# OSX
 
-# During Install
+## Pre-Install
+Run `git`.  This will prompt you to set up xcode.  Do this before you run `<path to local dashboard>/install.sh`
 
-## Add settings
-- In mysql settings table
+## Extra settings needed for Dash to run
 
-Name | Value
----- | ----
-userDir | /Users/travis
-homesteadFlag | 0
-homesteadLocation | /Users/travis/Code/Personal/Homestead
-nginxFlag | 1
-nginxLogLocation | /Users/travis/Library/Application Support/com.webcontrol.WebControl/nginx/logs
-
-# Nginx (local)
+### Nginx (local)
 ```
 $NGINX_LOCATION=which nginx
 sudo visudo
 $USER  ALL=(ALL) NOPASSWD: $NGINX_LOCATION
 ```
 
-# Homestead
+### Homestead
 `sudo chmod +a "$USER allow read,write,execute,append" /etc/hosts`
+
+# Ubuntu
+
+## Pre-Install
+
+Service | How to get it
+---- | ----
+git | sudo apt-get install git
