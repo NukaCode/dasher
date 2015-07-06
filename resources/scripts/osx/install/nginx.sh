@@ -53,3 +53,5 @@ if [ -f ~/.zshrc ]; then
     echo "source ~/.bash_aliases" >> ~/.zshrc
     . ~/.zshrc
 fi
+
+sudo nginx -s reload
