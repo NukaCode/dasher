@@ -37,7 +37,7 @@ class Edit
         $newGroup = $this->updateGroup($id, $request);
 
 
-        if (settings('homesteadFlag') == 1) {
+        if (settingEnabled('homestead') == 1) {
             $this->updateHomesteadConfig($originalGroup, $newGroup);
 
             $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');

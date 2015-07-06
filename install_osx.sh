@@ -64,6 +64,9 @@ else
     echo -e "${Cyan}Laravel installer already installed... $Color_Off"
 fi
 
+echo -e "${Green}Updating locate database... $Color_Off"
+sudo /usr/libexec/locate.updatedb
+
 ####################################################################################################################
 ############ MySQL
 ####################################################################################################################
@@ -162,5 +165,7 @@ sudo npm install
 bower install
 echo -e "${Yellow}Running migrations... $Color_Off"
 php artisan migrate --seed
+composer dump-autoload -o
+php artisan optimize
 
 echo 'Finished with initial install!'

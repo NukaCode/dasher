@@ -13,7 +13,7 @@
                         <div class="col-md-2">
                             <a href="javascript:void(0);" onclick="useEstimate()" class="btn btn-primary btn-block">Use This Value</a>
                     {!! Form::groupClose() !!}
-                    @if ($setting->enabled != null)
+                    @if ($setting->enabled !== null)
                         {!! Form::groupOpen() !!}
                             {!! Form::select('enabled', ['No', 'Yes'], $setting->enabled, ['id' => 'enabled'], 'Enabled?') !!}
                         {!! Form::groupClose() !!}

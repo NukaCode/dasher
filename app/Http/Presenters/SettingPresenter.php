@@ -49,7 +49,7 @@ class SettingPresenter extends BasePresenter {
 
     public function nginxEstimate()
     {
-        return str_replace('/default', '', shell_exec('locate "sites-enabled/default"'));
+        return str_replace('/sites-enabled/default', '', shell_exec('locate "sites-enabled/default"'));
     }
 
     public function homesteadEstimate()

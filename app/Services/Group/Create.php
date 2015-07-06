@@ -36,7 +36,7 @@ class Create
         // Create the group.
         $group = $this->group->create($request);
 
-        if (settings('homesteadFlag') == 1) {
+        if (settingEnabled('homestead') == 1) {
             // Add the folder to the homestead dir
             $this->updateHomesteadConfig($group);
 
