@@ -22,6 +22,17 @@ else
     echo -e "${Cyan}Composer already installed... $Color_Off"
 fi
 
+variable=`laravel --version`
+rc=$?
+
+if [[ $rc != 0 ]]
+then
+    echo -e "${Green}Installing laravel installer... $Color_Off"
+    . resources/scripts/osx/install/laravel_installer.sh
+else
+    echo -e "${Cyan}Laravel installer already installed... $Color_Off"
+fi
+
 ####################################################################################################################
 ############ MySQL
 ####################################################################################################################

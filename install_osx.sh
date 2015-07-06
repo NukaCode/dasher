@@ -5,7 +5,7 @@ echo 'Starting the installer...'
 ####################################################################################################################
 ############ Xcode
 ####################################################################################################################
-echo -e "${Green}Installing xcode (click install)...'
+echo -e "${Green}Installing xcode (click install)..."
 . resources/scripts/osx/install/xcode.sh
 
 echo 'Open Xcode, hit ⌘ + , to access the Preferences and navigate to the Locations tab. Set the Command Line Tools to the latest version available...'
@@ -14,7 +14,7 @@ read -p "Press [Enter] when done ..."
 ####################################################################################################################
 ############ Git
 ####################################################################################################################
-echo -e "${Green}Setting up common git aliases...'
+echo -e "${Green}Setting up common git aliases..."
 . resources/scripts/global/git.sh
 
 ####################################################################################################################
