@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GenerateSite;
 use App\Models\Group;
 use App\Models\Site;
 use App\Services\Site\Generate;
@@ -45,19 +46,14 @@ class SiteController extends BaseController
     /**
      * Store a newly generated site.
      *
-     * @param Request  $request
-     * @param Generate $siteGenerateService
+     * @param Request $request
      *
      * @return Response
      */
-    public function storeGenerated(Request $request, Generate $siteGenerateService)
+    public function storeGenerated(Request $request)
     {
-        list($success, $messages) = $siteGenerateService->handle($request);
+        $this->dispatch(new GenerateSite($request->all()));
 
-        if ($success) {
-            return redirect(route('home'))->with('message', 'Site generated!');
-        }
-
-        return redirect(route('site.generate'))->withInput()->withErrors($messages);
+        return redirect(route('home'))->with('message', 'Site is being generated!');
     }
 }

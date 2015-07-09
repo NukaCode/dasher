@@ -19,7 +19,7 @@ class CreateSitesTable extends Migration
             $table->string('path', 255);
             $table->smallInteger('port');
             $table->string('uuid', 36);
-            $table->string('status', 255);
+            $table->string('status', 255)->default('Adding site to database');
             $table->boolean('homesteadFlag')->default(0);
             $table->boolean('readyFlag')->default(0);
         });

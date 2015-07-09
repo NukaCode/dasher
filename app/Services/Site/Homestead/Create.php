@@ -48,7 +48,7 @@ class Create extends BaseCreate
     protected function setUpSite($site, $uuid, $group_id)
     {
         $path          = str_replace('//', '/', $site['path']);
-        $name          = Str::snake($site['name']);
+        $name          = $site['name'];
         $port          = $site['port'];
         $homesteadFlag = 1;
 

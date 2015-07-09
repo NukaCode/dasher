@@ -13,8 +13,16 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        'App\Events\SiteWasCreated' => [
+            'App\Listeners\Site\GenerateNginxConfig',
+            'App\Listeners\Site\GenerateHomesteadConfig',
+            'App\Listeners\Site\Finisher',
+        ],
+        'App\Events\SiteWasGenerated' => [
+            'App\Listeners\Site\LaravelInstaller',
+            'App\Listeners\Site\GenerateNginxConfig',
+            'App\Listeners\Site\GenerateHomesteadConfig',
+            'App\Listeners\Site\Finisher',
         ],
     ];
 

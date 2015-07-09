@@ -19,7 +19,8 @@ class Nginx
             $template);
 
         // Save the config to the filesystem.
-        $filename = setting('nginx') . '/sites-enabled/' . $site->uuid;
+        $filename = setting('nginx') .'/'. $site->uuid;
+        //$filename = setting('nginx') . '/sites-enabled/' . $site->uuid;
 
         app('files')->put($filename, $config);
     }

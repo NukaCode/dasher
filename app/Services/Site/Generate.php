@@ -2,6 +2,7 @@
 
 namespace App\Services\Site;
 
+use App\Events\SiteWasGenerated;
 use App\Models\Group;
 use App\Models\Site;
 use App\Services\Envoy;
@@ -37,32 +38,29 @@ class Generate
         $this->createHomesteadSiteService = $createHomesteadSiteService;
     }
 
-    public function handle(Request $request)
+    public function handle(array $request)
     {
-        $installerType = $request->get('installType') == 'base' ? null : '"--' . $request->get('installType') . '"';
-        $group         = $this->group->find($request->get('group_id'));
-        $sitePath      = Str::camel($request->get('name'));
-
-        $this->envoy->run('make-site --path="' . $group->starting_path . '" --name="' . $sitePath . '" --type=' . $installerType, true);
+        $group    = $this->group->find($request['group_id']);
+        $sitePath = Str::camel($request['name']);
 
         // Add the new site based on what site types are enabled.
+        $site = [
+            'name'     => $request['name'],
+            'path'     => $group->starting_path . '/' . $sitePath . '/public',
+            'group_id' => $group->id
+        ];
+
         if (settingEnabled('nginx') == 1) {
-            list($success, $messages) = $this->createNginxSite($request, $group, $sitePath);
-
-            if (! $success) {
-                return [$success, $messages];
-            }
+            $site['port'] = $group->maxPort;
+        } elseif (settingEnabled('homestead') == 1) {
+            $site['port'] = 8000;
         }
 
-        if (settingEnabled('homestead') == 1) {
-            list($success, $messages) = $this->createHomesteadSite($request, $group, $sitePath);
+        $site['uuid'] = $this->site->generateUuid($site['port'] . $site['name']);
 
-            if (! $success) {
-                return [$success, $messages];
-            }
-        }
+        $site = $this->site->create($site);
 
-        return [true, null];
+        event(new SiteWasGenerated($site, $request));
     }
 
     /**

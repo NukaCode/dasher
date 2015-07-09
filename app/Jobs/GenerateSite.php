@@ -3,39 +3,39 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
+use App\Models\Site;
+use App\Services\Site\Generate;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
+use Illuminate\Queue\InteractsWithQueue;
 
-class GenerateSite extends Job implements SelfHandling
+class GenerateSite extends Job implements SelfHandling, ShouldQueue
 {
+
+    use InteractsWithQueue;
+
+    /**
+     * @var array
+     */
+    private $request;
+
     /**
      * Create a new job instance.
+     *
+     * @param array $request
      */
-    public function __construct()
+    public function __construct(array $request)
     {
-        //
+        $this->request = $request;
     }
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
         // Add Site to DB
-        // Trigger create for nginx/homestead
-        // Update DB as it generate
-        // Have vue look for status when readyFlag is 0
-
-        // Statuses Nginx
-        // Setting up
-        // Running installer
-        // Finishing up
-
-        // Statuses Homestead
-        // Setting up
-        // Running installer
-        // Reprovisioning vagrant
-        // Finishing up
+        app(Generate::class)->handle($this->request);
     }
 }

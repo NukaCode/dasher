@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GenerateSite;
 use App\Models\Group;
+use App\Models\Site;
 
 class HomeController extends BaseController
 {
