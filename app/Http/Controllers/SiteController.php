@@ -14,7 +14,7 @@ class SiteController extends BaseController
     public function editor(Site $site, $editor, $id)
     {
         // Make sure we know what to do
-        $editorLocation = setting($editor . 'Location');
+        $editorLocation = setting($editor);
 
         if ($editorLocation == null) {
             return redirect(route('home'))->withErrors('Please set the ' . ucfirst($editor) . ' location in <a href="' . route('setting.index') . '">settings</a>.');
@@ -26,6 +26,11 @@ class SiteController extends BaseController
         exec($command . ' ' . $site->rootPath);
 
         return redirect(route('home'));
+    }
+
+    public function getJson(Site $site, $id)
+    {
+        return $site->find($id);
     }
 
     /**
@@ -50,9 +55,9 @@ class SiteController extends BaseController
      *
      * @return Response
      */
-    public function storeGenerated(Request $request)
+    public function storeGenerated(Request $request, Generate $generateSiteService)
     {
-        $this->dispatch(new GenerateSite($request->all()));
+        $generateSiteService->handle($request->all());
 
         return redirect(route('home'))->with('message', 'Site is being generated!');
     }

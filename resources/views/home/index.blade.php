@@ -31,22 +31,40 @@
                     <div class="list-group">
                         <div class="list-group-item clearfix site" v-repeat="site: group.sites | filterBy search | orderBy 'name'">
                             <div v-if="site.homesteadFlag == 0">
-                                <a href="http://localhost:@{{ site.port }}/" target="_blank">
-                                    <ul class="list-inline">
-                                        <li>@{{ site.port }}</li>
-                                        <li>@{{ site.name }}</li>
-                                    </ul>
-                                </a>
-                                <site-links site="@{{ site }}"></site-links>
+                                <div style="width: 100%;" class="clearfix">
+                                    <div style="width: 50%;" class="pull-left">
+                                        <a href="http://localhost:@{{ site.port }}/" target="_blank">
+                                            <ul class="list-inline">
+                                                <li>@{{ site.port }}</li>
+                                                <li>@{{ site.name }}</li>
+                                            </ul>
+                                        </a>
+                                    </div>
+                                    <div style="width: 35%;" class="pull-left" v-if="site.readyFlag == 0">
+                                        <span class="text-muted"><i class="fa fa-spinner fa-spin"></i>&nbsp;@{{ site.status }}...</span>
+                                    </div>
+                                    <div style="width: 15%;" class="pull-right">
+                                        <site-links site="@{{ site }}"></site-links>
+                                    </div>
+                                </div>
                             </div>
                             <div v-if="site.homesteadFlag == 1">
-                                <a href="http://@{{ site.name }}/" target="_blank">
-                                    <ul class="list-inline">
-                                        <li>@{{ site.port }}</li>
-                                        <li>@{{ site.name }}</li>
-                                    </ul>
-                                </a>
-                                <site-links site="@{{ site }}"></site-links>
+                                <div style="width: 100%;" class="clearfix">
+                                    <div style="width: 50%;" class="pull-left">
+                                        <a href="http://@{{ site.name }}/" target="_blank">
+                                            <ul class="list-inline" style="width: 60%;">
+                                                <li>@{{ site.port }}</li>
+                                                <li>@{{ site.name }}</li>
+                                            </ul>
+                                        </a>
+                                    </div>
+                                    <div style="width: 35%;" class="pull-left" v-if="site.readyFlag == 0">
+                                        <span class="text-primary"><i class="fa fa-spinner fa-spin"></i>&nbsp;@{{ site.status }}...</span>
+                                    </div>
+                                    <div style="width: 15%;" class="pull-right">
+                                        <site-links site="@{{ site }}"></site-links>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -59,14 +77,11 @@
             </div>
         </div>
     </div>
-    {{--<div class="col-md-4">--}}
-        {{--@include('home.partials.services')--}}
-    {{--</div>--}}
 </div>
 
 @section('js')
     <script id="site-links-template" type="x-template">
-        <span class="btn-group pull-right" style="margin-top: -23px;">
+        <span class="btn-group pull-right">
             @if (settingEnabled('phpstorm') == 1)
                 <a href="/site/editor/phpstorm/@{{ site.id }}" class="btn btn-xs btn-info"><small>PS</small></a>
             @endif
@@ -99,6 +114,26 @@
             data: {
                 search: '',
                 groups: window.groups
+            },
+
+            ready: function () {
+                var self = this;
+                var setInts = new Array;
+
+                $.each(this.groups, function (gIndex, group) {
+                    $.each(group.sites, function (sIndex, site) {
+                        if (site.readyFlag == 0) {
+                            setInts[site.id] = setInterval(function () {
+                                if (self.groups[gIndex].sites[sIndex].readyFlag == 1) {
+                                    clearInterval(setInts[site.id]);
+                                }
+                                self.$http.get(window.siteJsonLink + '/' + site.id, function (newSite) {
+                                    self.groups[gIndex].sites.$set(sIndex, newSite);
+                                });
+                            }, 1500);
+                        }
+                    });
+                });
             }
         });
     </script>

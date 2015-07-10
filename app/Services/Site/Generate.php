@@ -2,17 +2,16 @@
 
 namespace App\Services\Site;
 
-use App\Events\SiteWasGenerated;
+use App\Jobs\GenerateSite;
 use App\Models\Group;
 use App\Models\Site;
-use App\Services\Envoy;
-use App\Services\Site\Homestead\Create as CreateHomestead;
-use App\Services\Site\Nginx\Create as CreateNginx;
-use Illuminate\Http\Request;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Str;
 
 class Generate
 {
+
+    use DispatchesJobs;
 
     /* @var Site */
     private $site;
@@ -20,22 +19,10 @@ class Generate
     /* @var Group */
     private $group;
 
-    /* @var Envoy */
-    private $envoy;
-
-    /* @var CreateNginx */
-    private $createNginxSiteService;
-
-    /* @var CreateHomestead */
-    private $createHomesteadSiteService;
-
-    public function __construct(Site $site, Group $group, Envoy $envoy, CreateNginx $createNginxSiteService, CreateHomestead $createHomesteadSiteService)
+    public function __construct(Site $site, Group $group)
     {
-        $this->site                       = $site;
-        $this->group                      = $group;
-        $this->envoy                      = $envoy;
-        $this->createNginxSiteService     = $createNginxSiteService;
-        $this->createHomesteadSiteService = $createHomesteadSiteService;
+        $this->site  = $site;
+        $this->group = $group;
     }
 
     public function handle(array $request)
@@ -43,62 +30,60 @@ class Generate
         $group    = $this->group->find($request['group_id']);
         $sitePath = Str::camel($request['name']);
 
-        // Add the new site based on what site types are enabled.
-        $site = [
-            'name'     => $request['name'],
-            'path'     => $group->starting_path . '/' . $sitePath . '/public',
-            'group_id' => $group->id
-        ];
-
         if (settingEnabled('nginx') == 1) {
-            $site['port'] = $group->maxPort;
+            $this->createNginxSite($request, $group, $sitePath);
         } elseif (settingEnabled('homestead') == 1) {
-            $site['port'] = 8000;
+            $this->createHomesteadSite($request, $group, $sitePath);
         }
-
-        $site['uuid'] = $this->site->generateUuid($site['port'] . $site['name']);
-
-        $site = $this->site->create($site);
-
-        event(new SiteWasGenerated($site, $request));
     }
 
     /**
      * Add an nginx site to the database and filesystem.
      *
-     * @param Request $request
+     * @param array   $request
      * @param         $group
      * @param         $sitePath
      *
-     * @return mixed
+     * @return Site
      */
-    private function createNginxSite(Request $request, $group, $sitePath)
+    private function createNginxSite(array $request, $group, $sitePath)
     {
         $site = [
-            'name' => $request->get('name'),
-            'path' => $group->starting_path . '/' . $sitePath . '/public',
-            'port' => $group->maxPort
+            'name'          => $request['name'],
+            'path'          => $group->starting_path . '/' . $sitePath . '/public',
+            'port'          => $group->maxPort,
+            'group_id'      => $group->id,
+            'uuid'          => $this->site->generateUuid($group->maxPort . $request['name']),
+            'homesteadFlag' => 0,
         ];
 
-        return $this->createNginxSiteService->handle($site, $request->get('group_id'));
+        $site = $this->site->create($site);
+
+        $this->dispatch(new GenerateSite($site, $request));
     }
 
     /**
      * Add a homestead site to the database and filesystem.
      *
-     * @param $request
-     * @param $group
-     * @param $sitePath
+     * @param array $request
+     * @param Group $group
+     * @param       $sitePath
      *
-     * @return mixed
+     * @return Site
      */
-    private function createHomesteadSite($request, $group, $sitePath)
+    private function createHomesteadSite(array $request, Group $group, $sitePath)
     {
         $site = [
-            'name' => $request->get('name'),
-            'path' => $group->starting_path . '/' . $sitePath . '/public',
+            'name'          => $request['name'],
+            'path'          => $group->starting_path . '/' . $sitePath . '/public',
+            'port'          => 8000,
+            'group_id'      => $group->id,
+            'uuid'          => $this->site->generateUuid($group->maxPort . $request['name']),
+            'homesteadFlag' => 1,
         ];
 
-        return $this->createHomesteadSiteService->handle($site, $request->get('group_id'));
+        $site = $this->site->create($site);
+
+        $this->dispatch(new GenerateSite($site, $request));
     }
 }

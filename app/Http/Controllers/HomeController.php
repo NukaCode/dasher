@@ -19,7 +19,8 @@ class HomeController extends BaseController
     public function index(Group $group)
     {
         $groups = $group->with('sites')->get();
+        $siteJsonLink = route('site.json');
 
-        $this->setJavascriptData(compact('groups'));
+        $this->setJavascriptData(compact('groups', 'siteJsonLink'));
     }
 }

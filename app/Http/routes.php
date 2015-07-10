@@ -7,6 +7,11 @@ Route::get('/', [
 ]);
 
 Route::group(['prefix' => 'site'], function () {
+    Route::get('get-json/{id?}', [
+        'as'   => 'site.json',
+        'uses' => 'SiteController@getJson',
+    ]);
+
     Route::get('editor/{editor}/{id}', [
         'as'   => 'site.editor',
         'uses' => 'SiteController@editor',

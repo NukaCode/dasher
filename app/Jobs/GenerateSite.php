@@ -2,18 +2,20 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
-use App\Models\Site;
-use App\Services\Site\Generate;
+use App\Events\SiteWasGenerated;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 
 class GenerateSite extends Job implements SelfHandling, ShouldQueue
 {
 
     use InteractsWithQueue;
+
+    /**
+     * @var
+     */
+    private $site;
 
     /**
      * @var array
@@ -25,8 +27,9 @@ class GenerateSite extends Job implements SelfHandling, ShouldQueue
      *
      * @param array $request
      */
-    public function __construct(array $request)
+    public function __construct($site, array $request)
     {
+        $this->site    = $site;
         $this->request = $request;
     }
 
@@ -35,7 +38,6 @@ class GenerateSite extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
-        // Add Site to DB
-        app(Generate::class)->handle($this->request);
+        event(new SiteWasGenerated($this->site, $this->request));
     }
 }

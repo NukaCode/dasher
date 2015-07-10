@@ -33,7 +33,7 @@ class GenerateNginxConfig implements ShouldQueue
     public function handle(Event $event)
     {
         // Make sure it's an nginx site
-        if (settingEnabled('nginx')) {
+        if (settingEnabled('nginx') && $event->site->homesteadFlag == 0) {
             $this->createConfig($event->site);
             $this->reloadNginx($event->site);
         }

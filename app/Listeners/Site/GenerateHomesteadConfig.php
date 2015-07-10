@@ -43,7 +43,7 @@ class GenerateHomesteadConfig implements ShouldQueue
     public function handle(Event $event)
     {
         // Make sure it's an nginx site
-        if (settingEnabled('homestead')) {
+        if (settingEnabled('homestead') && $event->site->homesteadFlag == 1) {
             $this->createConfig($event->site);
             $this->addEnv($event->site);
             $this->provisionVagrant($event->site);
