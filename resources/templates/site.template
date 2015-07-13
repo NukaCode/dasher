@@ -1,14 +1,11 @@
 server {
 	# name {{NAME}}
-	# env local
-	# framework laravel
-	# framework-version 5
 
 	listen *:{{PORT}};
     server_name  localhost;
     root         {{PATH}};
 
-    index index.html index.html index.php
+    index index.html index.html index.php;
 
     access_log  /usr/local/etc/nginx/logs/{{PORT}}-access.log  main;
     error_log  /usr/local/etc/nginx/logs/{{PORT}}-error.log  error;

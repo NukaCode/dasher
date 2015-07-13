@@ -1,10 +1,20 @@
 /**
- * vue-resource v0.1.4
+ * vue-resource v0.1.7
  * https://github.com/vuejs/vue-resource
  * Released under the MIT License.
  */
 
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define(factory);
+	else if(typeof exports === 'object')
+		exports["VueResource"] = factory();
+	else
+		root["VueResource"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 
@@ -102,7 +112,7 @@
 	            return '';
 	        });
 
-	        if (options.root !== false && !url.match(/^(https?:)?\//)) {
+	        if (typeof options.root === 'string' && !url.match(/^(https?:)?\//)) {
 	            url = options.root + '/' + url;
 	        }
 
@@ -130,7 +140,6 @@
 
 	    Url.options = {
 	        url: '',
-	        root: false,
 	        params: {}
 	    };
 
@@ -350,40 +359,41 @@
 	            Http.options, _.options('http', this, options)
 	        );
 
-	        promise = (options.method.toLowerCase() == 'jsonp' ? jsonp : xhr).call(this, this.$url || Vue.url, options);
+	        if (_.isPlainObject(options.data) && /^(get|jsonp)$/i.test(options.method)) {
+	            _.extend(options.params, options.data);
+	            options.data = '';
+	        }
 
-	        _.extend(promise, {
+	        promise = (options.method.toLowerCase() == 'jsonp' ? jsonp : xhr).call(this, this.$url || Vue.url, options).then(transformResponse, transformResponse);
 
-	            success: function (onSuccess) {
+	        promise.success = function (fn) {
 
-	                this.then(function (request) {
-	                    onSuccess.apply(self, parseReq(request));
-	                }, function () {});
+	            promise.then(function (response) {
+	                fn.call(self, response.data, response.status, response);
+	            });
 
-	                return this;
-	            },
+	            return promise;
+	        };
 
-	            error: function (onError) {
+	        promise.error = function (fn) {
 
-	                this.catch(function (request) {
-	                    onError.apply(self, parseReq(request));
-	                });
+	            promise.catch(function (response) {
+	                fn.call(self, response.data, response.status, response);
+	            });
 
-	                return this;
-	            },
+	            return promise;
+	        };
 
-	            always: function (onAlways) {
+	        promise.always = function (fn) {
 
-	                var cb = function (request) {
-	                    onAlways.apply(self, parseReq(request));
-	                };
+	            var cb = function (response) {
+	                fn.call(self, response.data, response.status, response);
+	            };
 
-	                this.then(cb, cb);
+	            promise.then(cb, cb);
 
-	                return this;
-	            }
-
-	        });
+	            return promise;
+	        };
 
 	        if (options.success) {
 	            promise.success(options.success);
@@ -404,9 +414,9 @@
 	            options.beforeSend(request, options);
 	        }
 
-	        if (options.emulateHTTP && /^(PUT|PATCH|DELETE)$/i.test(options.method)) {
+	        if (options.emulateHTTP && /^(put|patch|delete)$/i.test(options.method)) {
 	            options.headers['X-HTTP-Method-Override'] = options.method;
-	            options.method = 'POST';
+	            options.method = 'post';
 	        }
 
 	        if (options.emulateJSON && _.isPlainObject(options.data)) {
@@ -460,7 +470,6 @@
 
 	        var callback = '_jsonp' + Math.random().toString(36).substr(2), script, result;
 
-	        _.extend(options.params, options.data);
 	        options.params[options.jsonp] = callback;
 
 	        if (_.isFunction(options.beforeSend)) {
@@ -501,27 +510,25 @@
 	        return promise;
 	    }
 
-	    function parseReq(request) {
-
-	        var result;
+	    function transformResponse(response) {
 
 	        try {
-	            result = JSON.parse(request.responseText);
+	            response.data = JSON.parse(response.responseText);
 	        } catch (e) {
-	            result = request.responseText;
+	            response.data = response.responseText;
 	        }
 
-	        return [result, request.status, request];
+	        return response;
 	    }
 
 	    Http.options = {
-	        method: 'GET',
+	        method: 'get',
 	        params: {},
 	        data: '',
 	        jsonp: 'callback',
 	        beforeSend: null,
 	        emulateHTTP: false,
-	        emulateJSON: false,
+	        emulateJSON: false
 	    };
 
 	    Http.headers = {
@@ -751,4 +758,6 @@
 
 
 /***/ }
-/******/ ]);
+/******/ ])
+});
+;

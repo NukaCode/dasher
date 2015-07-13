@@ -3,6 +3,7 @@
 namespace App\Services\Site\Nginx;
 
 use App\Resources\Nginx;
+use App\Services\Site\BaseEdit;
 
 class Edit extends BaseEdit
 {
