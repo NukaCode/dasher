@@ -2,29 +2,30 @@
 
 namespace App\Services\Site\Nginx;
 
-use App\Resources\Nginx;
+use App\Jobs\CreateSite;
 use App\Services\Site\BaseCreate;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class Create extends BaseCreate
 {
 
+    use DispatchesJobs;
+
     /**
      * Save the site to the database, create a config and add that config to nginx.
      *
-     * @param $site
+     * @param $request
      * @param $groupId
      *
      * @return bool
      */
-    public function handle($site, $groupId)
+    public function handle($request, $groupId)
     {
-        $uuid = $this->generateUuid($site);
+        $uuid = $this->site->generateUuid($request['port'] . $request['name']);
 
-        $site = $this->createSite($site, $groupId, $uuid);
+        $site = $this->createSite($request, $groupId, $uuid);
 
-        Nginx::createConfig($site);
-
-        $this->envoy->run('nginx --cmd="reload"');
+        $this->dispatch(new CreateSite($site, $request));
 
         return [true, null];
     }
