@@ -29,14 +29,16 @@ elixir(function (mix) {
         .copy(bower_dir + 'jasny-bootstrap/dist/js/jasny-bootstrap.min.js', 'resources/assets/js/vendor/jasny-bootstrap.js')
         .copy(bower_dir + 'vue/dist/vue.js', 'resources/assets/js/vendor/vue.js')
         .copy(bower_dir + 'vue-resource/dist/vue-resource.js', 'resources/assets/js/vendor/vue-resource.js')
+        .copy('resources/assets/semantic/dist/semantic.js', 'resources/assets/js/vendor/semantic.js')
         .scripts(
         [
             'vendor/jquery.js',
-            'vendor/bootstrap.js',
-            'vendor/messenger.js',
-            'vendor/messenger-theme-future.js',
-            'vendor/bootbox.js',
-            'vendor/select2.js',
+            //'vendor/bootstrap.js',
+            //'vendor/messenger.js',
+            //'vendor/messenger-theme-future.js',
+            //'vendor/bootbox.js',
+            //'vendor/select2.js',
+            'vendor/semantic.js',
             'vendor/vue.js',
             'vendor/vue-resource.js',
         ], 'public/js/all.js')
@@ -61,14 +63,16 @@ elixir(function (mix) {
         .copy(bower_dir + 'mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css', 'resources/assets/css/vendor/colorpicker/css/bootstrap-colorpicker.min.css')
         .copy(bower_dir + 'metisMenu/dist/metisMenu.css', 'resources/assets/css/vendor/metisMenu.css')
         .copy(bower_dir + 'nukacode-admin/css/admin.css', 'resources/assets/css/vendor/admin.css')
+        .copy('resources/assets/semantic/dist/semantic.css', 'resources/assets/css/vendor/semantic.css')
         .styles(
         [
             'app.css',
+            //'vendor/semantic.css',
             'vendor/font-awesome.css',
             'vendor/messenger.css',
             'vendor/messenger-theme-future.css',
-            'vendor/select2.css',
-            'vendor/select2-bootstrap.css',
+            //'vendor/select2.css',
+            //'vendor/select2-bootstrap.css',
         ], 'public/css/all.css')
         .styles(
         [
@@ -83,5 +87,6 @@ elixir(function (mix) {
 
         // Extras
         .copy(bower_dir + 'font-awesome/fonts', 'public/fonts')
+        .copy('resources/assets/semantic/themes/default/assets/fonts', 'public/css/themes/default/assets/fonts')
         .copy(bower_dir + 'mjolnic-bootstrap-colorpicker/dist/img', 'public/css/vendor/colorpicker/img')
 });

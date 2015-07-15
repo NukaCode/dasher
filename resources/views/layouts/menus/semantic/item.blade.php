@@ -1,0 +1,1 @@
+{!! HTML::link($item->url, $item->name, ['class' => $item->active ? 'item active' : 'item']) !!}

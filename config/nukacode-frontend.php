@@ -57,10 +57,10 @@ return [
     | This variable is used to determine if the site uses the default twitter nav
     | bar or any form of custom menu.  Set this value to the name of the blade
     | located in views/layouts/menus that you wish to use.
-    | Included Options: twitter, utopian
+    | Included Options: twitter, utopian, semantic
     |
     */
-    'menu'           => 'twitter',
+    'menu'           => 'semantic',
 
     /*
     |--------------------------------------------------------------------------

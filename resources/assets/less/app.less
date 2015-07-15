@@ -1,1 +1,91 @@
-@import '../../../vendor/bower_components/nukacode-bootstrap-dark/less/dark';
+//@import '../../../vendor/bower_components/nukacode-bootstrap-dark/less/dark';
+@import '../semantic/src/semantic';
+@import "../semantic/src/themes/default/globals/site.variables";
+@import "prefixer";
+
+#content {
+    margin: 0 10px;
+}
+.clearfix {
+    clear: both;
+}
+.ui.menu .primary.active.item,
+.ui.primary.menu .active.item {
+    border-color: @primaryColor !important;
+    color: @primaryColor !important;
+}
+.ui.menu.primary .item:hover {
+    color: @lightPrimaryColor !important;
+    border-bottom: 2px solid @lightPrimaryColor;
+}
+.ui.input input.primary {
+    border-color: @primaryColor;
+    color: @primaryColor;
+    &::-webkit-input-placeholder {
+        color: @primaryColor;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+        color: @primaryColor;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+        color: @primaryColor;
+    }
+
+    &:-ms-input-placeholder {
+        color: @primaryColor;
+    }
+}
+.ui.segments.dark {
+    background: #202020;
+    .box-shadow(~"rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset");
+    & .segment:hover {
+        background: fadeout(@primaryColor, 70%);
+    }
+}
+.ui[class*="right floated"] {
+    float: right;
+}
+.ui[class*="left floated"] {
+    float: left;
+}
+.ui.primary.text {
+    color: @primaryColor !important;
+}
+.ui.red.text {
+    color: @red !important;
+}
+.ui.orange.text {
+    color: @orange !important;
+}
+.ui.yellow.text {
+    color: @yellow !important;
+}
+.ui.olive.text {
+    color: @olive !important;
+}
+.ui.green.text {
+    color: @green !important;
+}
+.ui.teal.text {
+    color: @teal !important;
+}
+.ui.blue.text {
+    color: @blue !important;
+}
+.ui.violet.text {
+    color: @violet !important;
+}
+.ui.pink.text {
+    color: @pink !important;
+}
+.ui.brown.text {
+    color: @brown !important;
+}
+.ui.grey.text {
+    color: @grey !important;
+}
+.ui.black.text {
+    color: @black !important;
+}
