@@ -9,6 +9,11 @@
 .clearfix {
     clear: both;
 }
+.ui.horizontal.segments {
+    & .segment {
+        border-left: none;
+    }
+}
 .ui.menu .primary.active.item,
 .ui.primary.menu .active.item {
     border-color: @primaryColor !important;
@@ -20,7 +25,7 @@
 }
 .ui.input input.primary {
     border-color: @primaryColor;
-    color: @primaryColor;
+    color: @lightPrimaryColor;
     &::-webkit-input-placeholder {
         color: @primaryColor;
     }
@@ -37,10 +42,17 @@
         color: @primaryColor;
     }
 }
+.ui .column.dark, .ui.segment.dark {
+    background: #202020;
+    .box-shadow(~"rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset");
+}
+.ui.segment.dark.attached {
+    border: none;
+}
 .ui.segments.dark {
     background: #202020;
     .box-shadow(~"rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset");
-    & .segment:hover {
+    & .segments:hover {
         background: fadeout(@primaryColor, 70%);
     }
 }
@@ -49,6 +61,77 @@
 }
 .ui[class*="left floated"] {
     float: left;
+}
+.ui.form.primary {
+    color: @primaryColor;
+    label {
+        color: @primaryColor;
+    }
+    input {
+        border-color: @primaryColor;
+        color: @lightPrimaryColor;
+        &::-webkit-input-placeholder {
+            color: @primaryColor;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: @primaryColor;
+        }
+
+        &::-moz-placeholder {  /* Firefox 19+ */
+            color: @primaryColor;
+        }
+
+        &:-ms-input-placeholder {
+            color: @primaryColor;
+        }
+    }
+    input:focus {
+        border-color: @lightPrimaryColor;
+        color: @lightPrimaryColor;
+        &::-webkit-input-placeholder {
+            color: @lightPrimaryColor;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: @lightPrimaryColor;
+        }
+
+        &::-moz-placeholder {  /* Firefox 19+ */
+            color: @lightPrimaryColor;
+        }
+
+        &:-ms-input-placeholder {
+            color: @lightPrimaryColor;
+        }
+    }
+}
+.ui.table.dark {
+    background: #202020;
+    .box-shadow(~"rgba(255, 255, 255, 0.1) 0 1px 0, rgba(0, 0, 0, 0.8) 0 1px 7px 0px inset");
+    & td, th {
+        background: transparent;
+    }
+    & thead {
+        & th {
+            color: @lightPrimaryColor;
+            border-bottom: 2px solid @primaryColor;
+        }
+    }
+    & tbody tr {
+        &:first-of-type td {
+            border-top: none;
+        }
+        & td {
+            border-top: 1px solid #343838;
+            color: @lightGrey;
+        }
+    }
+    &.hover {
+        & tr:hover {
+            background: fadeout(@primaryColor, 70%);
+        }
+    }
 }
 .ui.primary.text {
     color: @primaryColor !important;

@@ -74,8 +74,9 @@ class GroupController extends BaseController
     public function show($id)
     {
         $group = $this->group->with('sites')->find($id);
+        $siteJsonLink = route('site.json');
 
-        $this->setJavascriptData(compact('group'));
+        $this->setJavascriptData(compact('group', 'siteJsonLink'));
         $this->setViewData(compact('group'));
     }
 

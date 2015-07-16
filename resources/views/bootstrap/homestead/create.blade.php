@@ -1,35 +1,38 @@
-<div class="ui grid" id="vue">
-    <div class="ten wide centered column dark">
-        <form class="ui form primary">
-            <h4 class="ui dividing header primary text">Create a New Nginx Site</h4>
-            <div class="field">
-                <label for="starting_path">Directory</label>
-                <div class="ui action input">
-                    <input type="text" name="path" placeholder="Directory" v-on="keyup: getDirectory"
-                           v-model="query" id="query" value="{{ $group->starting_path }}" />
-                    <button class="ui primary right labeled icon button" type="button" id="toggle" v-on="click:
-                    toggleDirs">
-                        <i class="folder icon"></i>
-                        <span>Hide Dirs</span>
-                    </button>
-                </div>
+<div class="row" id="vue">
+    <div class="col-md-offset-2 col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">Create a New Homestead Site</div>
+            <div class="panel-body">
+                {!! Form::open() !!}
+                    {!! Form::setSizes(2, 8, 2)->groupOpen() !!}
+                        {!! Form::text('path', $group->starting_path, [
+                            'placeholder' => 'Directory',
+                            'v-on'        => 'keyup: getDirectory',
+                            'v-model'     => 'query',
+                            'id'          => 'query',
+                        ], 'Directory') !!}
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-block btn-primary" id="toggle" v-on="click: toggleDirs">Hide Dirs</button>
+                        </div>
+                    </div>
+                    <div class="col-md-offset-2 panel-footer" id="dirs">
+                        <div v-on="click: upDirectory()">../</div>
+                        <div v-repeat="directory: directories">
+                            <div v-on="click: setQuery(directory)">@{{ directory | relativePath }}</div>
+                        </div>
+                    </div>
+                    <br />
+                    {!! Form::setSizes(2, 10)->groupOpen() !!}
+                        {!! Form::text('name', null, ['placeholder' => 'somename.app'], 'Name') !!}
+                        {!! Form::help('.app is automatically appended to all names for you.') !!}
+                    {!! Form::groupClose() !!}
+                    {!! Form::offsetGroupOpen() !!}
+                        {!! Form::submit('Add Site', ['class' => 'btn btn-primary']) !!}
+                    {!! Form::groupClose() !!}
+                {!! Form::close() !!}
             </div>
-            <div class="ui black inverted segment" id="dirs">
-                <div class="ui primary text" v-on="click: upDirectory()">../</div>
-                <div v-repeat="directory: directories">
-                    <div class="ui primary text" v-on="click: setQuery(directory)">@{{ directory | relativePath }}</div>
-                </div>
-            </div>
-            <div class="field">
-                <label for="name">Name</label>
-                <input type="text" name="name">
-            </div>
-            <div class="field">
-                <label for="starting_port">Port</label>
-                <input type="text" name="starting_port" value="{{ $port }}">
-            </div>
-            <div class="ui primary button">Add Site</div>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -73,11 +76,11 @@
                 },
                 toggleDirs: function () {
                     if (this.showDirs == true) {
-                        $('#toggle span').text('Show Dirs');
+                        $('#toggle').text('Show Dirs');
                         $('#dirs').hide();
                         this.$set('showDirs', false);
                     } else {
-                        $('#toggle span').text('Hide Dirs');
+                        $('#toggle').text('Hide Dirs');
                         $('#dirs').show();
                         this.$set('showDirs', true);
                     }

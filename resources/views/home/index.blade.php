@@ -6,7 +6,9 @@
         </div>
     </div>
     <div class="four wide column" v-repeat="group: groups">
-        <div class="ui left floated primary text">@{{ group.name }}</div>
+        <div class="ui left floated primary text">
+            <a href="/group/@{{ group.id }}">@{{ group.name }}</a>
+        </div>
         <div class="ui horizontal link list right floated">
             @if (settingEnabled('nginx'))
                 <a href="/nginx/create/@{{ group.id }}" class="item">
@@ -28,9 +30,14 @@
             <div class="ui segments dark">
                 <div class="ui horizontal segments" v-repeat="site: group.sites | filterBy search | orderBy 'name'">
                     <div class="ui segment" v-if="site.homesteadFlag == 0">
-                        <a href="http://localhost:@{{ site.port }}/" target="_blank" class="ui left floated">
-                            <span class="ui grey text">@{{ site.port }}</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="http://localhost:@{{ site.displayPort }}/" target="_blank" class="ui left floated">
+                            <span class="ui grey text">@{{ site.displayPort }}</span>
+                            {{--<span>@{{ site.displayPort | portSpaces }}</span>--}}
+                            <span v-if="site.displayPort < 100">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span v-if="site.displayPort < 1000 && site.displayPort >= 100">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span v-if="site.displayPort < 10000 && site.displayPort >= 1000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span v-if="site.displayPort < 100000 && site.displayPort >= 10000">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            <span v-if="site.displayPort < 1000000 && site.displayPort >= 100000">&nbsp;&nbsp;&nbsp;</span>
                             <span class="ui primary text">@{{ site.name }}</span>
                         </a>
                         <site-links site="@{{ site }}"></site-links>
@@ -58,10 +65,8 @@
                 </div>
             </div>
         </div>
-        <div v-if="group.sites.length == 0">
-            <div class="list-group">
-                <div class="list-group-item text-primary">No sites added to the @{{ group.name }} group yet.</div>
-            </div>
+        <div class="ui segment dark" v-if="group.sites.length == 0">
+            <div class="ui grey text">No sites added to the @{{ group.name }} group yet.</div>
         </div>
     </div>
 </div>
@@ -109,6 +114,35 @@
             template: document.querySelector('#site-links-template')
         });
 
+//        Vue.filter('portSpaces', function (value) {
+//            var portLength = value.toString().length;
+//
+//            var entityMap = {
+//                "&": "&amp;",
+//                "<": "&lt;",
+//                ">": "&gt;",
+//                '"': '&quot;',
+//                "'": '&#39;',
+//                "/": '&#x2F;'
+//            };
+//
+//            if (portLength == 2) {
+//                return "\s\s\s\s\s\s\s\s\s\s";
+//            } else if (portLength == 3) {
+//                var result = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+//            } else if (portLength == 4) {
+//                var result = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+//            } else if (portLength == 5) {
+//                var result = '&nbsp;&nbsp;&nbsp;&nbsp;';
+//            } else if (portLength == 6) {
+//                var result = '&nbsp;&nbsp;&nbsp;';
+//            }
+//
+//            return String(result).replace(/[&<>"'\/]/g, function (s) {
+//                return entityMap[s];
+//            });
+//        });
+
         new Vue({
             el: '#vue',
 
@@ -135,6 +169,12 @@
                         }
                     });
                 });
+            },
+
+            methods: {
+                portSpace: function () {
+
+                }
             }
         });
     </script>

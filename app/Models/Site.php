@@ -13,9 +13,23 @@ class Site extends BaseModel
 
     protected $fillable = ['group_id', 'name', 'path', 'port', 'uuid', 'homesteadFlag'];
 
+    protected $appends = ['displayPort'];
+
     public function getRootPathAttribute()
     {
         return str_replace('/public', '', $this->path);
+    }
+
+    public function getDisplayPortAttribute()
+    {
+        $port    = $this->port;
+        $forward = PortForward::where('destination_port', $port)->first();
+
+        if ($forward != null) {
+            return $forward->starting_port;
+        }
+
+        return $port;
     }
 
     public function updateStatus($status, $ready = false)
@@ -47,6 +61,11 @@ class Site extends BaseModel
     public function group()
     {
         return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function forwardedPort()
+    {
+        return $this->hasOne(PortForward::class, 'destination_port', 'port');
     }
 
 }

@@ -34,8 +34,8 @@ elixir(function (mix) {
         [
             'vendor/jquery.js',
             //'vendor/bootstrap.js',
-            //'vendor/messenger.js',
-            //'vendor/messenger-theme-future.js',
+            'vendor/messenger.js',
+            'vendor/messenger-theme-future.js',
             //'vendor/bootbox.js',
             //'vendor/select2.js',
             'vendor/semantic.js',

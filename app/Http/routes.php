@@ -86,6 +86,7 @@ Route::group(['namespace' => 'Site'], function () {
 
 resourceRoute('GroupController', 'group', 'active:groups');
 resourceRoute('SettingController', 'setting', 'active:settings');
+resourceRoute('PortController', 'port', 'active:settings');
 
 Route::group(['prefix' => 'directory'], function () {
     Route::get('lookup', [

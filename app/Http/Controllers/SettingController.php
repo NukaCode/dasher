@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PortForward;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
@@ -21,13 +22,16 @@ class SettingController extends BaseController
     /**
      * Display a listing of the resource.
      *
+     * @param PortForward $forward
+     *
      * @return Response
      */
-    public function index()
+    public function index(PortForward $forward)
     {
         $settings = $this->setting->all();
+        $forwards = $forward->orderBy('starting_port', 'asc')->get();
 
-        $this->setViewData(compact('settings'));
+        $this->setViewData(compact('settings', 'forwards'));
     }
 
     /**

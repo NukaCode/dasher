@@ -23,7 +23,7 @@ class SettingPresenter extends BasePresenter {
             return $this->entity->value === '0' ? 'false' : 'true';
         }
 
-        return Str::limit($this->entity->value, 50);
+        return Str::limit($this->entity->value, 20);
     }
 
     public function estimatedValue()

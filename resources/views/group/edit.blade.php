@@ -1,40 +1,35 @@
-<div class="row" id="vue">
-    <div class="col-md-offset-2 col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">Edit {{ $group->name }}</div>
-            <div class="panel-body">
-                {!! Form::open() !!}
-                    {!! Form::setSizes(2, 8, 2)->groupOpen() !!}
-                        {!! Form::text('starting_path', $group->starting_path, [
-                            'placeholder' => 'Directory',
-                            'v-on'        => 'keyup: getDirectory',
-                            'v-model'     => 'query',
-                            'id'          => 'query',
-                        ], 'Starting Path') !!}
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-block btn-primary" id="toggle" v-on="click: toggleDirs">Show Dirs</button>
-                        </div>
-                    </div>
-                    <div class="col-md-offset-2 panel-footer" id="dirs" style="display: none;">
-                        <div v-on="click: upDirectory()">../</div>
-                        <div v-repeat="directory: directories">
-                            <div v-on="click: setQuery(directory)">@{{ directory | relativePath }}</div>
-                        </div>
-                    </div>
-                    <br />
-                    {!! Form::setSizes(2, 10)->groupOpen() !!}
-                        {!! Form::text('name', $group->name, [], 'Name') !!}
-                    {!! Form::groupClose() !!}
-                    {!! Form::groupOpen() !!}
-                        {!! Form::text('starting_port', $group->starting_port, [], 'Starting Port') !!}
-                    {!! Form::groupClose() !!}
-                    {!! Form::offsetGroupOpen() !!}
-                        {!! Form::submit('Update Site Group', ['class' => 'btn btn-primary']) !!}
-                    {!! Form::groupClose() !!}
-                {!! Form::close() !!}
+<div class="ui grid" id="vue">
+    <div class="ten wide centered column dark">
+        <form class="ui form primary">
+            <h4 class="ui dividing header primary text">Edit {{ $group->name }}</h4>
+            <div class="field">
+                <label for="starting_path">Starting Path</label>
+                <div class="ui action input">
+                    <input type="text" name="starting_path" v-on="keyup: getDirectory" v-model="query" id="query"
+                           value="{{ $group->starting_path }}" />
+                    <button class="ui primary right labeled icon button" type="button" id="toggle" v-on="click:
+                    toggleDirs">
+                        <i class="folder icon"></i>
+                        <span>Show Dirs</span>
+                    </button>
+                </div>
             </div>
-        </div>
+            <div class="ui black inverted segment" id="dirs" style="display: none;">
+                <div class="ui primary text" v-on="click: upDirectory()">../</div>
+                <div v-repeat="directory: directories">
+                    <div class="ui primary text" v-on="click: setQuery(directory)">@{{ directory | relativePath }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" name="name" value="{{ $group->name }}">
+            </div>
+            <div class="field">
+                <label for="starting_port">Starting Port</label>
+                <input type="text" name="starting_port" value="{{ $group->starting_port }}">
+            </div>
+            <div class="ui primary button">Update Site Group</div>
+        </form>
     </div>
 </div>
 
@@ -78,11 +73,11 @@
                 },
                 toggleDirs: function () {
                     if (this.showDirs == true) {
-                        $('#toggle').text('Show Dirs');
+                        $('#toggle span').text('Show Dirs');
                         $('#dirs').hide();
                         this.$set('showDirs', false);
                     } else {
-                        $('#toggle').text('Hide Dirs');
+                        $('#toggle span').text('Hide Dirs');
                         $('#dirs').show();
                         this.$set('showDirs', true);
                     }
