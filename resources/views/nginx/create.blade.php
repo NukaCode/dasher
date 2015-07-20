@@ -1,6 +1,7 @@
 <div class="ui grid" id="vue">
     <div class="ten wide centered column dark">
-        <form class="ui form primary">
+        <form class="ui form primary" method="POST">
+            {{ csrf_field() }}
             <h4 class="ui dividing header primary text">Create a New Nginx Site</h4>
             <div class="field">
                 <label for="starting_path">Directory</label>
@@ -25,10 +26,10 @@
                 <input type="text" name="name">
             </div>
             <div class="field">
-                <label for="starting_port">Port</label>
-                <input type="text" name="starting_port" value="{{ $port }}">
+                <label for="port">Port</label>
+                <input type="text" name="port" value="{{ $port }}">
             </div>
-            <div class="ui primary button">Add Site</div>
+            <input type="submit" class="ui primary button" value="Add Site" />
         </form>
     </div>
 </div>

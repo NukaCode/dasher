@@ -1,25 +1,37 @@
-<div class="row">
-    <div class="col-md-offset-2 col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">Generate a new site</div>
-            <div class="panel-body">
-                {!! Form::open() !!}
-                    {!! Form::offsetGroupOpen() !!}
-                        @foreach ($installerOptions as $option => $readable)
-                            {!! Form::radio('installType', $option, false, [], $readable, true) !!}
-                        @endforeach
-                    {!! Form::groupClose() !!}
-                    {!! Form::groupOpen() !!}
-                        {!! Form::select2('group_id', $groups, null, [], 'Group') !!}
-                    {!! Form::groupClose() !!}
-                    {!! Form::groupOpen() !!}
-                        {!! Form::text('name', null, [], 'Site Name') !!}
-                    {!! Form::groupClose() !!}
-                    {!! Form::offsetGroupOpen() !!}
-                        {!! Form::submit('Generate Site', ['class' => 'btn btn-primary']) !!}
-                    {!! Form::groupClose() !!}
-                {!! Form::close() !!}
+<div class="ui grid">
+    <div class="ten wide centered column">
+        <form class="ui form primary" method="POST">
+            {{ csrf_field() }}
+            <h4 class="ui dividing header primary text">Generate a new site</h4>
+            <div class="inline fields">
+                @foreach ($installerOptions as $option => $readable)
+                    <div class="field">
+                        <div class="ui radio checkbox">
+                            <input type="radio" name="installType" value-{{ $option }} />
+                            <label>{{ $readable }}</label>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        </div>
+            <div class="field">
+                <select name="group_id" id="group_id" class="ui search dropdown">
+                    <option value="">Select One</option>
+                    @foreach ($groups as $id => $group)
+                        <option value="{{ $id }}">{{ $group }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="field">
+                <label for="name">Site Name</label>
+                <input type="text" name="name" />
+            </div>
+            <input type="submit" class="ui primary button" value="Generate Site" />
+        </form>
     </div>
 </div>
+
+@section('js')
+    <script>
+        $('#group_id').dropdown();
+    </script>
+@endsection
