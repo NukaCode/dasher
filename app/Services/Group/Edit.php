@@ -40,7 +40,7 @@ class Edit
         if (settingEnabled('homestead') == 1) {
             $this->updateHomesteadConfig($originalGroup, $newGroup);
 
-            $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
+            $this->envoy->run('vagrant --cmd="provision" --path="' . setting('homestead') . '"');
         }
 
         return [true, null];

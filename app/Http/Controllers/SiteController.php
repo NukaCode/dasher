@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GenerateSite;
+use App\Models\Clones;
 use App\Models\Group;
 use App\Models\Site;
-use App\Services\Site\Generate;
+use App\Services\Site\Generate\Clones as CloneService;
+use App\Services\Site\Generate\Install;
 use Illuminate\Http\Request;
 
 class SiteController extends BaseController
@@ -40,7 +41,7 @@ class SiteController extends BaseController
      *
      * @return Response
      */
-    public function generate(Group $group)
+    public function install(Group $group)
     {
         $groups           = $group->orderByNameAsc()->lists('name', 'id');
         $installerOptions = config('nukacode-installer.options');
@@ -52,12 +53,43 @@ class SiteController extends BaseController
      * Store a newly generated site.
      *
      * @param Request $request
+     * @param Install $installSiteService
      *
      * @return Response
      */
-    public function storeGenerated(Request $request, Generate $generateSiteService)
+    public function storeInstall(Request $request, Install $installSiteService)
     {
-        $generateSiteService->handle($request->all());
+        $installSiteService->handle($request->all());
+
+        return redirect(route('home'))->with('message', 'Site is being generated!');
+    }
+
+    /**
+     * Show the form to generate a new Laravel site.
+     *
+     * @param Group $group
+     *
+     * @return Response
+     */
+    public function clones(Group $group, Clones $clone)
+    {
+        $groups = $group->orderByNameAsc()->lists('name', 'id');
+        $clones = $clone->orderByNameAsc()->lists('name', 'id');
+
+        $this->setViewData(compact('groups', 'clones'));
+    }
+
+    /**
+     * Store a newly generated site.
+     *
+     * @param Request      $request
+     * @param CloneService $cloneSiteService
+     *
+     * @return Response
+     */
+    public function storeClone(Request $request, CloneService $cloneSiteService)
+    {
+        $cloneSiteService->handle($request->all());
 
         return redirect(route('home'))->with('message', 'Site is being generated!');
     }

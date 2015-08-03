@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Setting;
 
+use App\Http\Controllers\BaseController;
 use App\Models\PortForward;
 use Illuminate\Http\Request;
 

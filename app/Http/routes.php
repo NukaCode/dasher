@@ -17,15 +17,26 @@ Route::group(['prefix' => 'site'], function () {
         'uses' => 'SiteController@editor',
     ]);
 
-    Route::get('generate', [
-        'as'         => 'site.generate',
-        'uses'       => 'SiteController@generate',
-        'middleware' => 'active:generate'
+    Route::get('install', [
+        'as'         => 'site.install',
+        'uses'       => 'SiteController@install',
+        'middleware' => 'active:install'
     ]);
 
-    Route::post('generate', [
-        'as'   => 'nginx.generate',
-        'uses' => 'SiteController@storeGenerated'
+    Route::post('install', [
+        'as'   => 'site.install',
+        'uses' => 'SiteController@storeInstall'
+    ]);
+
+    Route::get('clone', [
+        'as'         => 'site.clone',
+        'uses'       => 'SiteController@clones',
+        'middleware' => 'active:clone'
+    ]);
+
+    Route::post('clone', [
+        'as'   => 'site.clone',
+        'uses' => 'SiteController@storeClone'
     ]);
 });
 
@@ -86,7 +97,11 @@ Route::group(['namespace' => 'Site'], function () {
 
 resourceRoute('GroupController', 'group', 'active:groups');
 resourceRoute('SettingController', 'setting', 'active:settings');
-resourceRoute('PortController', 'port', 'active:settings');
+
+Route::group(['prefix' => 'setting', 'namespace' => 'Setting'], function () {
+    resourceRoute('PortController', 'port', 'active:settings');
+    resourceRoute('CloneController', 'clone', 'active:settings');
+});
 
 Route::group(['prefix' => 'directory'], function () {
     Route::get('lookup', [

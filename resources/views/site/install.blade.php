@@ -7,7 +7,7 @@
                 @foreach ($installerOptions as $option => $readable)
                     <div class="field">
                         <div class="ui radio checkbox">
-                            <input type="radio" name="installType" value-{{ $option }} />
+                            <input type="radio" name="installType" value="{{ $option }}" />
                             <label>{{ $readable }}</label>
                         </div>
                     </div>

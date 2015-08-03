@@ -14,14 +14,24 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\SiteWasCreated' => [
-            'App\Listeners\Site\GenerateNginxConfig',
-            'App\Listeners\Site\GenerateHomesteadConfig',
+            'App\Listeners\Site\Config\Nginx',
+            'App\Listeners\Site\Config\Homestead',
             'App\Listeners\Site\Finisher',
         ],
-        'App\Events\SiteWasGenerated' => [
-            'App\Listeners\Site\LaravelInstaller',
-            'App\Listeners\Site\GenerateNginxConfig',
-            'App\Listeners\Site\GenerateHomesteadConfig',
+        'App\Events\SiteWasCloned' => [
+            'App\Listeners\Site\Clones',
+            'App\Listeners\Site\Composer',
+            'App\Listeners\Site\Env',
+            'App\Listeners\Site\Database',
+            'App\Listeners\Site\Key',
+            'App\Listeners\Site\Config\Nginx',
+            'App\Listeners\Site\Config\Homestead',
+            'App\Listeners\Site\Finisher',
+        ],
+        'App\Events\SiteWasInstalled' => [
+            'App\Listeners\Site\Install',
+            'App\Listeners\Site\Config\Nginx',
+            'App\Listeners\Site\Config\Homestead',
             'App\Listeners\Site\Finisher',
         ],
     ];

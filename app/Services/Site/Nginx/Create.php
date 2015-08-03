@@ -2,6 +2,7 @@
 
 namespace App\Services\Site\Nginx;
 
+use App\Events\SiteWasCreated;
 use App\Jobs\CreateSite;
 use App\Services\Site\BaseCreate;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -25,7 +26,7 @@ class Create extends BaseCreate
 
         $site = $this->createSite($request, $groupId, $uuid);
 
-        $this->dispatch(new CreateSite($site, $request));
+        event(new SiteWasCreated($site, $request));
 
         return [true, null];
     }

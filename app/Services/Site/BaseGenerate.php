@@ -2,39 +2,22 @@
 
 namespace App\Services\Site;
 
-use App\Jobs\GenerateSite;
 use App\Models\Group;
 use App\Models\Site;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Str;
 
-class Generate
+class BaseGenerate
 {
 
-    use DispatchesJobs;
-
     /* @var Site */
-    private $site;
+    protected $site;
 
     /* @var Group */
-    private $group;
+    protected $group;
 
     public function __construct(Site $site, Group $group)
     {
         $this->site  = $site;
         $this->group = $group;
-    }
-
-    public function handle(array $request)
-    {
-        $group    = $this->group->find($request['group_id']);
-        $sitePath = Str::camel($request['name']);
-
-        if (settingEnabled('nginx') == 1) {
-            $this->createNginxSite($request, $group, $sitePath);
-        } elseif (settingEnabled('homestead') == 1) {
-            $this->createHomesteadSite($request, $group, $sitePath);
-        }
     }
 
     /**
@@ -46,7 +29,7 @@ class Generate
      *
      * @return Site
      */
-    private function createNginxSite(array $request, $group, $sitePath)
+    protected function createNginxSite(array $request, $group, $sitePath)
     {
         $site = [
             'name'          => $request['name'],
@@ -59,7 +42,7 @@ class Generate
 
         $site = $this->site->create($site);
 
-        $this->dispatch(new GenerateSite($site, $request));
+        return $site;
     }
 
     /**
@@ -71,7 +54,7 @@ class Generate
      *
      * @return Site
      */
-    private function createHomesteadSite(array $request, Group $group, $sitePath)
+    protected function createHomesteadSite(array $request, Group $group, $sitePath)
     {
         $site = [
             'name'          => $request['name'],
@@ -84,6 +67,6 @@ class Generate
 
         $site = $this->site->create($site);
 
-        $this->dispatch(new GenerateSite($site, $request));
+        return $site;
     }
 }

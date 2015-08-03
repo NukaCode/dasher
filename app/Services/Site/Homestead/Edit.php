@@ -25,7 +25,7 @@ class Edit extends BaseEdit
 
         app(Homestead::class)->updateConfig($originalSite, $newSite);
 
-        $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
+        $this->envoy->run('vagrant --cmd="provision" --path="' . setting('homestead') . '"');
         app(Hosts::class)->updateHost($originalSite->name, $newSite->name);
 
         return [true, null];

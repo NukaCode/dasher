@@ -4,9 +4,10 @@ namespace App\Events;
 
 use App\Models\Site;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SiteWasCreated extends Event implements ShouldQueue
+class SiteWasCloned extends Event implements ShouldQueue
 {
 
     use InteractsWithQueue;

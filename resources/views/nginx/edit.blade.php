@@ -1,40 +1,36 @@
-<div class="row" id="vue">
-    <div class="col-md-offset-2 col-md-8">
-        <div class="panel panel-default">
-            <div class="panel-heading">Edit {{ $site->name }}</div>
-            <div class="panel-body">
-                {!! Form::open() !!}
-                    {!! Form::setSizes(2, 8, 2)->groupOpen() !!}
-                        {!! Form::text('path', $site->path, [
-                            'placeholder' => 'Directory',
-                            'v-on'        => 'keyup: getDirectory',
-                            'v-model'     => 'query',
-                            'id'          => 'query',
-                        ], 'Directory') !!}
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-block btn-primary" id="toggle" v-on="click: toggleDirs">Show Dirs</button>
-                        </div>
-                    </div>
-                    <div class="col-md-offset-2 panel-footer" id="dirs" style="display: none;">
-                        <div v-on="click: upDirectory()">../</div>
-                        <div v-repeat="directory: directories">
-                            <div v-on="click: setQuery(directory)">@{{ directory | relativePath }}</div>
-                        </div>
-                    </div>
-                    <br />
-                    {!! Form::setSizes(2, 10)->groupOpen() !!}
-                        {!! Form::text('name', $site->name, [], 'Name') !!}
-                    {!! Form::groupClose() !!}
-                    {!! Form::groupOpen() !!}
-                        {!! Form::text('port', $site->port, [], 'Port') !!}
-                    {!! Form::groupClose() !!}
-                    {!! Form::offsetGroupOpen() !!}
-                        {!! Form::submit('Update Site', ['class' => 'btn btn-primary']) !!}
-                    {!! Form::groupClose() !!}
-                {!! Form::close() !!}
+<div class="ui grid" id="vue">
+    <div class="ten wide centered column dark">
+        <form class="ui form primary" method="POST">
+            {{ csrf_field() }}
+            <h4 class="ui dividing header primary text">Edit {{ $site->name }}</h4>
+            <div class="field">
+                <label for="starting_path">Starting Path</label>
+                <div class="ui action input">
+                    <input type="text" name="path" v-on="keyup: getDirectory" v-model="query" id="query"
+                           value="{{ $site->path }}" />
+                    <button class="ui primary right labeled icon button" type="button" id="toggle" v-on="click:
+                    toggleDirs">
+                        <i class="folder icon"></i>
+                        <span>Show Dirs</span>
+                    </button>
+                </div>
             </div>
-        </div>
+            <div class="ui black inverted segment" id="dirs" style="display: none;">
+                <div class="ui primary text" v-on="click: upDirectory()">../</div>
+                <div v-repeat="directory: directories">
+                    <div class="ui primary text" v-on="click: setQuery(directory)">@{{ directory | relativePath }}</div>
+                </div>
+            </div>
+            <div class="field">
+                <label for="name">Name</label>
+                <input type="text" name="name" value="{{ $site->name }}">
+            </div>
+            <div class="field">
+                <label for="starting_port">Port</label>
+                <input type="text" name="port" value="{{ $site->port }}">
+            </div>
+            <input type="submit" class="ui primary button" value="Update Site" />
+        </form>
     </div>
 </div>
 

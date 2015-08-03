@@ -30,7 +30,7 @@ class Create extends BaseCreate
         app(Homestead::class)->createConfig($site, $name);
         $this->addEnvConfig($name, $site);
 
-        $this->envoy->run('vagrant --cmd="provision" --dir="' . setting('homestead') . '"');
+        $this->envoy->run('vagrant --cmd="provision" --path="' . setting('homestead') . '"');
         app(Hosts::class)->addHost($site->name);
 
         return [true, null];

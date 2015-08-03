@@ -18,6 +18,11 @@ class Group extends BaseModel
         return $maxPort == 0 ? $this->starting_port : $maxPort + 1;
     }
 
+    public function setStartingPathAttribute($value)
+    {
+        $this->attributes['starting_path'] = str_replace('//', '/', $value);
+    }
+
     public function sites()
     {
         return $this->hasMany(Site::class, 'group_id');

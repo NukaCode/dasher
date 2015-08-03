@@ -48532,28 +48532,45 @@ html.ios body {
 .ui[class*="left floated"] {
   float: left;
 }
+.ui.selection.dropdown {
+  color: #5097b5;
+  border-color: #5097b5;
+}
+.ui.selection.dropdown label {
+  color: #5097b5 !important;
+}
+.ui.selection.visible.dropdown > .text:not(.default) {
+  color: #5097b5;
+}
+.ui.dropdown > .default.text,
+.ui.default.dropdown > .text {
+  color: #5097b5;
+}
+.ui.form .selection.dropdown {
+  border-bottom-color: #5097b5;
+}
 .ui.form.primary {
   color: #5097b5;
 }
 .ui.form.primary label {
-  color: #5097b5;
+  color: #5097b5 !important;
 }
-.ui.form.primary input {
+.ui.form.primary input:not([type="submit"]) {
   border-color: #5097b5;
   color: #86b7cc;
 }
-.ui.form.primary input::-webkit-input-placeholder {
+.ui.form.primary input:not([type="submit"])::-webkit-input-placeholder {
   color: #5097b5;
 }
-.ui.form.primary input:-moz-placeholder {
+.ui.form.primary input:not([type="submit"]):-moz-placeholder {
   /* Firefox 18- */
   color: #5097b5;
 }
-.ui.form.primary input::-moz-placeholder {
+.ui.form.primary input:not([type="submit"])::-moz-placeholder {
   /* Firefox 19+ */
   color: #5097b5;
 }
-.ui.form.primary input:-ms-input-placeholder {
+.ui.form.primary input:not([type="submit"]):-ms-input-placeholder {
   color: #5097b5;
 }
 .ui.form.primary input:focus {

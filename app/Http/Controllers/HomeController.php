@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\Site;
+use App\Services\Envoy;
 
 class HomeController extends BaseController
 {
@@ -15,7 +16,7 @@ class HomeController extends BaseController
      *
      * @return Response
      */
-    public function index(Group $group)
+    public function index(Group $group, Envoy $envoy)
     {
         $groups = $group->with('sites')->get();
         $siteJsonLink = route('site.json');

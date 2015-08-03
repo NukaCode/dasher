@@ -1,6 +1,7 @@
 <div class="ui grid" id="vue">
     <div class="ten wide centered column dark">
-        <form class="ui form primary">
+        <form class="ui form primary" method="POST">
+            {{ csrf_field() }}
             <h4 class="ui dividing header primary text">Edit {{ $group->name }}</h4>
             <div class="field">
                 <label for="starting_path">Starting Path</label>
@@ -28,7 +29,7 @@
                 <label for="starting_port">Starting Port</label>
                 <input type="text" name="starting_port" value="{{ $group->starting_port }}">
             </div>
-            <div class="ui primary button">Update Site Group</div>
+            <input type="submit" class="ui primary button" value="Update Site Group" />
         </form>
     </div>
 </div>

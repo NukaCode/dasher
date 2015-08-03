@@ -3,10 +3,14 @@
 namespace App\Events;
 
 use App\Models\Site;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Request;
+use Illuminate\Queue\InteractsWithQueue;
 
-class SiteWasGenerated extends Event
+class SiteWasInstalled extends Event implements ShouldQueue
 {
+
+    use InteractsWithQueue;
 
     /**
      * @var Site

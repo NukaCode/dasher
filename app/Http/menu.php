@@ -14,9 +14,14 @@ $leftMenu->link('groups', function (Link $link) {
     $link->url  = route('group.index');
 });
 
-$leftMenu->link('generate', function (Link $link) {
-    $link->name = 'Generate Site';
-    $link->url  = route('site.generate');
+$leftMenu->link('install', function (Link $link) {
+    $link->name = 'Install Site';
+    $link->url  = route('site.install');
+});
+
+$leftMenu->link('clone', function (Link $link) {
+    $link->name = 'Clone Site';
+    $link->url  = route('site.clone');
 });
 
 $rightMenu = \Menu::getMenu('rightMenu');

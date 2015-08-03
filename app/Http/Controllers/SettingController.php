@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clones;
 use App\Models\PortForward;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -26,12 +27,13 @@ class SettingController extends BaseController
      *
      * @return Response
      */
-    public function index(PortForward $forward)
+    public function index(PortForward $forward, Clones $clone)
     {
         $settings = $this->setting->all();
         $forwards = $forward->orderBy('starting_port', 'asc')->get();
+        $clones   = $clone->all();
 
-        $this->setViewData(compact('settings', 'forwards'));
+        $this->setViewData(compact('settings', 'forwards', 'clones'));
     }
 
     /**

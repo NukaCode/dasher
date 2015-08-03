@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Listeners\Site;
+namespace App\Listeners\Site\Config;
 
 use App\Events\Event;
-use App\Resources\Nginx;
+use App\Resources\Nginx as NginxResource;
 use App\Services\Envoy;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class GenerateNginxConfig implements ShouldQueue
+class Nginx implements ShouldQueue
 {
 
     /**
@@ -43,7 +43,7 @@ class GenerateNginxConfig implements ShouldQueue
     {
         $site->updateStatus('Setting up nginx');
 
-        Nginx::createConfig($site);
+        NginxResource::createConfig($site);
     }
 
     protected function reloadNginx($site)

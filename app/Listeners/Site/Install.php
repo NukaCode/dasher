@@ -8,7 +8,7 @@ use App\Services\Envoy;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Str;
 
-class LaravelInstaller implements ShouldQueue
+class Install implements ShouldQueue
 {
 
     /**

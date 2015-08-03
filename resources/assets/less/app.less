@@ -62,12 +62,28 @@
 .ui[class*="left floated"] {
     float: left;
 }
+.ui.selection.dropdown {
+    color: @primaryColor;
+    border-color: @primaryColor;
+    label {
+        color: @primaryColor !important;
+    }
+}
+.ui.selection.visible.dropdown > .text:not(.default) {
+    color: @primaryColor;
+}
+.ui.dropdown > .default.text, .ui.default.dropdown > .text {
+    color: @primaryColor;
+}
+.ui.form .selection.dropdown {
+    border-bottom-color: @primaryColor;
+}
 .ui.form.primary {
     color: @primaryColor;
     label {
-        color: @primaryColor;
+        color: @primaryColor !important;
     }
-    input {
+    input:not([type="submit"]) {
         border-color: @primaryColor;
         color: @lightPrimaryColor;
         &::-webkit-input-placeholder {

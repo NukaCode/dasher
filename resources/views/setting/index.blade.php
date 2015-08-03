@@ -59,4 +59,36 @@
             </tbody>
         </table>
     </div>
+    <div class="four wide column">
+        <h4 class="ui dividing header primary text">Clones</h4>
+        <table class="ui fluid table hover dark">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>URL</th>
+                    <th class="right aligned">{!! HTML::linkRouteIcon('clone.create', [], 'plus icon', null, ['class' => 'mini ui primary compact icon button']) !!}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($clones->count() > 0)
+                    @foreach ($clones as $clone)
+                        <tr>
+                            <td>{{ $clone->name }}</td>
+                            <td>{{ Str::limit($clone->url, 30) }}</td>
+                            <td class="right aligned">
+                                <div class="mini ui buttons">
+                                    {!! HTML::linkRouteIcon('clone.edit', [$clone->id], 'edit icon', null, ['class' => 'ui compact primary icon button']) !!}
+                                    {!! HTML::linkRouteIcon('clone.delete', [$clone->id], 'trash icon', null, ['class' => 'confirm-remove ui compact red icon button']) !!}
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="3">No clones have been saved.</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
 </div>
