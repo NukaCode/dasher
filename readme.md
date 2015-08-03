@@ -1,7 +1,7 @@
 # OSX
 
 ## Pre-Install
-Run `git`.  This will prompt you to set up xcode.  Do this before you run `<path to local dashboard>/install.sh`
+You will need to have everything to run a site.  This includes nginx, mysql, php, git, etc.  You can use [NukaCode\Setup](https://github.com/nukacode/setup) to handle this for you.
 
 ## Extra settings needed for Dash to run
 
