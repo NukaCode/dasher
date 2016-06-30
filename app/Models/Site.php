@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Ramsey\Uuid\Uuid;
 
 class Site extends BaseModel
@@ -13,11 +14,21 @@ class Site extends BaseModel
 
     protected $fillable = ['group_id', 'name', 'path', 'port', 'uuid', 'homesteadFlag'];
 
-    protected $appends = ['displayPort'];
+    protected $appends = ['displayPort', 'url', 'package_length'];
 
     public function getRootPathAttribute()
     {
         return str_replace('/public', '', $this->path);
+    }
+
+    public function getUrlAttribute()
+    {
+        return Str::camel($this->name) .'.dev';
+    }
+
+    public function getPackageLengthAttribute()
+    {
+        return is_null($this->package) ? 0 : strlen($this->package);
     }
 
     public function getDisplayPortAttribute()

@@ -29,6 +29,10 @@
                 <label for="starting_port">Port</label>
                 <input type="text" name="port" value="{{ $site->port }}">
             </div>
+            <div class="field">
+                <label for="uuid">UUID</label>
+                <input type="text" readonly="readonly" value="/usr/local/etc/nginx/sites-enabled/{{ $site->uuid }}">
+            </div>
             <input type="submit" class="ui primary button" value="Update Site" />
         </form>
     </div>
